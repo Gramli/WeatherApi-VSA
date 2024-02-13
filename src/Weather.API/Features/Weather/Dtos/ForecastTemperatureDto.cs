@@ -1,4 +1,4 @@
-﻿namespace Weather.Domain.Dtos
+﻿namespace Weather.API.Features.Weather.Dtos
 {
     public class ForecastTemperatureDto
     {

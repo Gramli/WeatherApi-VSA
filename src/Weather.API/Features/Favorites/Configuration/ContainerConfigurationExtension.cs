@@ -1,11 +1,11 @@
 ﻿using Validot;
 using Weather.API.Features.Favorites.Abstractions;
 using Weather.API.Features.Favorites.Commands;
+using Weather.API.Features.Favorites.Mapping;
 using Weather.API.Features.Favorites.Queries;
 using Weather.API.Features.Favorites.Repositories;
+using Weather.API.Features.Favorites.Validation;
 using Weather.API.Shared.Extensions;
-using Weather.Core.Features.Favorites.Commands;
-using Weather.Core.Features.Favorites.Validation;
 
 namespace Weather.API.Features.Favorites.Configuration
 {
@@ -14,7 +14,8 @@ namespace Weather.API.Features.Favorites.Configuration
         public static IServiceCollection AddFavorites(this IServiceCollection serviceCollection) => serviceCollection
                 .AddValidation()
                 .AddHandlers()
-                .AddDatabase();
+                .AddDatabase()
+                .AddMapping();
 
         private static IServiceCollection AddHandlers(this IServiceCollection serviceCollection) => serviceCollection
                 .AddScoped<IGetFavoritesHandler, GetFavoritesHandler>()
@@ -28,6 +29,12 @@ namespace Weather.API.Features.Favorites.Configuration
             return serviceCollection
                 .AddScoped<IFavoritesQueriesRepository, FavoritesQueriesRepository>()
                 .AddScoped<IFavoritesCommandsRepository, FavoritesCommandsRepository>();
+        }
+
+        private static IServiceCollection AddMapping(this IServiceCollection serviceCollection)
+        {
+            return serviceCollection
+                .AddAutoMapper(typeof(WeatherEntitiesProfile));
         }
     }
 }

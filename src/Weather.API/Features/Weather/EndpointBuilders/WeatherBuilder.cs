@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Weather.API.Features.Favorites.Abstractions;
-using Weather.API.Features.Favorites.Dtos;
 using Weather.API.Features.Weather.Abstractions;
+using Weather.API.Features.Weather.Dtos;
+using Weather.API.Features.Weather.Queries;
 using Weather.API.Shared.Dtos;
 using Weather.API.Shared.Extensions;
-using Weather.Domain.Dtos;
-using Weather.Domain.Dtos.Commands;
-using Weather.Domain.Dtos.Queries;
-using Weather.Domain.Http;
+using WeatherApi.Shared.Http;
 
 namespace Weather.API.EndpointBuilders
 {
@@ -15,12 +12,10 @@ namespace Weather.API.EndpointBuilders
     {
         public static IEndpointRouteBuilder BuildWeatherEndpoints(this IEndpointRouteBuilder endpointRouteBuilder)
         {
-
             endpointRouteBuilder
                 .MapGroup("weather")
                 .BuildActualWeatherEndpoints()
-                .BuildForecastWeatherEndpoints()
-                .BuildFavoriteWeatherEndpoints();
+                .BuildForecastWeatherEndpoints();
 
             return endpointRouteBuilder;
         }
@@ -44,25 +39,6 @@ namespace Weather.API.EndpointBuilders
                         .Produces<DataResponse<ForecastWeatherDto>>()
                         .WithName("GetForecastWeather")
                         .WithTags("Getters");
-
-            return endpointRouteBuilder;
-        }
-
-        private static IEndpointRouteBuilder BuildFavoriteWeatherEndpoints(this IEndpointRouteBuilder endpointRouteBuilder)
-        {
-            endpointRouteBuilder.MapGet("v1/favorites",
-                async ([FromServices] IGetFavoritesHandler handler, CancellationToken cancellationToken) =>
-                    await handler.SendAsync(EmptyRequest.Instance, cancellationToken))
-                        .Produces<DataResponse<FavoritesWeatherDto>>()
-                        .WithName("GetFavorites")
-                        .WithTags("Getters");
-
-            endpointRouteBuilder.MapPost("v1/favorite",
-                async ([FromBody] AddFavoriteCommand addFavoriteCommand, [FromServices] IAddFavoriteHandler handler, CancellationToken cancellationToken) =>
-                    await handler.SendAsync(addFavoriteCommand, cancellationToken))
-                        .Produces<DataResponse<bool>>()
-                        .WithName("AddFavorite")
-                        .WithTags("Setters");
 
             return endpointRouteBuilder;
         }

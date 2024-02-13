@@ -1,9 +1,8 @@
 ﻿using Validot;
 using Weather.API.Shared.Dtos;
-using Weather.Core.Validation;
-using Weather.Domain.Dtos;
+using WeatherApi.Shared.Validation;
 
-namespace Weather.Core.Features.Weather.Validation
+namespace Weather.API.Features.Weather.Validation
 {
     internal sealed class CurrentWeatherDtoSpecificationHolder : ISpecificationHolder<CurrentWeatherDto>
     {

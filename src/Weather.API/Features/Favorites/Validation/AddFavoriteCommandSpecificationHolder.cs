@@ -2,7 +2,7 @@
 using Weather.API.Features.Favorites.Commands;
 using WeatherApi.Shared.Validation;
 
-namespace Weather.Core.Features.Favorites.Validation
+namespace Weather.API.Features.Favorites.Validation
 {
     internal sealed class AddFavoriteCommandSpecificationHolder : ISpecificationHolder<AddFavoriteCommand>
     {

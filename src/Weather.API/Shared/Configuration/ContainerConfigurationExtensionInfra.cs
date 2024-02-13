@@ -1,5 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Validot;
 using Weather.API.Shared.Database.EFContext;
+using Weather.API.Shared.Dtos;
+using Weather.API.Shared.Extensions;
+using WeatherApi.Shared.Validation;
 using Wheaterbit.Client.Configuration;
 
 namespace Weather.API.Shared.Configuration
@@ -10,7 +14,9 @@ namespace Weather.API.Shared.Configuration
         {
             return serviceCollection
                 .AddDatabase()
-                .AddExternalHttpServices(configuration);
+                .AddExternalHttpServices(configuration)
+                .AddValidation()
+                .AddLogging();
         }
 
         private static IServiceCollection AddDatabase(this IServiceCollection serviceCollection)
@@ -24,6 +30,19 @@ namespace Weather.API.Shared.Configuration
             return serviceCollection
                 .AddHttpClient()
                 .AddWeatherbit(configuration);
+        }
+
+        private static IServiceCollection AddValidation(this IServiceCollection serviceCollection)
+        {
+            return serviceCollection
+                .AddValidotSingleton<IValidator<LocationDto>, LocationDtoSpecificationHolder, LocationDto>();
+        }
+
+        public static WebApplicationBuilder AddLogging(this WebApplicationBuilder builder)
+        {
+            builder.Logging.ClearProviders();
+            builder.Logging.AddConsole();
+            return builder;
         }
     }
 }

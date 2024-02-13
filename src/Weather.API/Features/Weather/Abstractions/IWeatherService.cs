@@ -1,6 +1,6 @@
 ﻿using FluentResults;
+using Weather.API.Features.Weather.Dtos;
 using Weather.API.Shared.Dtos;
-using Weather.Domain.Dtos;
 
 namespace Weather.API.Features.Weather.Abstractions
 {

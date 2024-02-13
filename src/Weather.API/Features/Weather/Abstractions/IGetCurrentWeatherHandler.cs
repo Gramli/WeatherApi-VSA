@@ -1,7 +1,6 @@
-﻿using Weather.API.Shared.Dtos;
-using Weather.Core.Queries;
-using Weather.Domain.Dtos;
-using Weather.Domain.Dtos.Queries;
+﻿using Weather.API.Features.Weather.Queries;
+using Weather.API.Shared.Abstractions;
+using Weather.API.Shared.Dtos;
 
 namespace Weather.API.Features.Weather.Abstractions
 {

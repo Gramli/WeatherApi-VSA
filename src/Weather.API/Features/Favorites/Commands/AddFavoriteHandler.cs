@@ -1,13 +1,12 @@
 ﻿using Ardalis.GuardClauses;
 using Validot;
 using Weather.API.Features.Favorites.Abstractions;
-using Weather.API.Features.Favorites.Commands;
 using Weather.API.Resources;
 using Weather.API.Shared.Extensions;
 using WeatherApi.Shared.Http;
 using WeatherApi.Shared.Logging;
 
-namespace Weather.Core.Features.Favorites.Commands
+namespace Weather.API.Features.Favorites.Commands
 {
     internal sealed class AddFavoriteHandler : IAddFavoriteHandler
     {

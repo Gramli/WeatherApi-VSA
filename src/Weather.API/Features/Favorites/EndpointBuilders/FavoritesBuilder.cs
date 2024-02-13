@@ -9,7 +9,16 @@ namespace Weather.API.Features.Favorites.EndpointBuilders
 {
     public static class FavoritesBuilder
     {
-        internal static IEndpointRouteBuilder BuildFavoriteWeatherEndpoints(this IEndpointRouteBuilder endpointRouteBuilder)
+        public static IEndpointRouteBuilder BuildFavoriteEndpoints(this IEndpointRouteBuilder endpointRouteBuilder)
+        {
+            endpointRouteBuilder
+                .MapGroup("weather")
+                .BuildFavoriteWeatherEndpoints();
+
+            return endpointRouteBuilder;
+        }
+
+        private static IEndpointRouteBuilder BuildFavoriteWeatherEndpoints(this IEndpointRouteBuilder endpointRouteBuilder)
         {
             endpointRouteBuilder.MapGet("v1/favorites",
                 async ([FromServices] IGetFavoritesHandler handler, CancellationToken cancellationToken) =>

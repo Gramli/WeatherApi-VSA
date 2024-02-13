@@ -1,15 +1,14 @@
 ﻿using Ardalis.GuardClauses;
-using Microsoft.Extensions.Logging;
 using Validot;
 using Weather.API.Features.Weather.Abstractions;
-using Weather.Domain;
-using Weather.Domain.Dtos;
-using Weather.Domain.Dtos.Queries;
-using Weather.Domain.Extensions;
-using Weather.Domain.Http;
-using Weather.Domain.Logging;
+using Weather.API.Features.Weather.Dtos;
+using Weather.API.Resources;
+using Weather.API.Shared.Extensions;
+using Weather.API.Shared.Resources;
+using WeatherApi.Shared.Http;
+using WeatherApi.Shared.Logging;
 
-namespace Weather.Core.Features.Weather.Queries
+namespace Weather.API.Features.Weather.Queries
 {
     internal sealed class GetForecastWeatherHandler : IGetForecastWeatherHandler
     {

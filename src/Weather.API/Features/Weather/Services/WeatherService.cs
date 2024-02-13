@@ -2,10 +2,10 @@
 using AutoMapper;
 using FluentResults;
 using Weather.API.Features.Weather.Abstractions;
-using Weather.API.Resources;
+using Weather.API.Features.Weather.Dtos;
+using Weather.API.Features.Weather.Resources;
 using Weather.API.Shared.Dtos;
 using Weather.API.Shared.Extensions;
-using Weather.Domain.Dtos;
 using Wheaterbit.Client.Abstractions;
 
 namespace Weather.API.Features.Weather.Services
@@ -31,12 +31,12 @@ namespace Weather.API.Features.Weather.Services
 
             if (currentWeatherResult.Value is null || !currentWeatherResult.Value.Data.HasAny())
             {
-                return Result.Fail(ErrorMessages.ExternalClientGetDataFailed_EmptyOrNull);
+                return Result.Fail(ServiceErrorMessages.ExternalClientGetDataFailed_EmptyOrNull);
             }
 
             if (currentWeatherResult.Value.Data.Count != 1)
             {
-                return Result.Fail(string.Format(ErrorMessages.ExternalClientGetDataFailed_CorruptedData_InvalidCount, currentWeatherResult.Value.Data.Count));
+                return Result.Fail(string.Format(ServiceErrorMessages.ExternalClientGetDataFailed_CorruptedData_InvalidCount, currentWeatherResult.Value.Data.Count));
             }
 
             return _mapper.Map<CurrentWeatherDto>(currentWeatherResult.Value.Data.Single());
@@ -52,7 +52,7 @@ namespace Weather.API.Features.Weather.Services
 
             if (forecastWeatherResult.Value is null || !forecastWeatherResult.Value.Data.Any())
             {
-                return Result.Fail(ErrorMessages.ExternalClientGetDataFailed_EmptyOrNull);
+                return Result.Fail(ServiceErrorMessages.ExternalClientGetDataFailed_EmptyOrNull);
             }
 
             return _mapper.Map<ForecastWeatherDto>(forecastWeatherResult.Value);

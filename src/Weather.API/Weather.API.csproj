@@ -31,17 +31,17 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Compile Update="Features\Weather\Resources\ServiceErrorMessages.Designer.cs">
+	  <Compile Update="Domain\Resources\ServiceErrorMessages.Designer.cs">
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	    <DependentUpon>ServiceErrorMessages.resx</DependentUpon>
 	  </Compile>
-	  <Compile Update="Resources\ErrorMessages.Designer.cs">
+	  <Compile Update="Domain\Resources\ErrorMessages.Designer.cs">
 	    <DependentUpon>ErrorMessages.resx</DependentUpon>
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
 	  </Compile>
-	  <Compile Update="Shared\Resources\ErrorLogMessages.Designer.cs">
+	  <Compile Update="Domain\Resources\ErrorLogMessages.Designer.cs">
 	    <DependentUpon>ErrorLogMessages.resx</DependentUpon>
 	    <DesignTime>True</DesignTime>
 	    <AutoGen>True</AutoGen>
@@ -49,15 +49,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <EmbeddedResource Update="Features\Weather\Resources\ServiceErrorMessages.resx">
+	  <EmbeddedResource Update="Domain\Resources\ServiceErrorMessages.resx">
 	    <Generator>ResXFileCodeGenerator</Generator>
 	    <LastGenOutput>ServiceErrorMessages.Designer.cs</LastGenOutput>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="Resources\ErrorMessages.resx">
+	  <EmbeddedResource Update="Domain\Resources\ErrorMessages.resx">
 	    <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
 	    <Generator>ResXFileCodeGenerator</Generator>
 	  </EmbeddedResource>
-	  <EmbeddedResource Update="Shared\Resources\ErrorLogMessages.resx">
+	  <EmbeddedResource Update="Domain\Resources\ErrorLogMessages.resx">
 	    <LastGenOutput>ErrorLogMessages.Designer.cs</LastGenOutput>
 	    <Generator>PublicResXFileCodeGenerator</Generator>
 	  </EmbeddedResource>

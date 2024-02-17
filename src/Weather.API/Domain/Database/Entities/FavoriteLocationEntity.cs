@@ -1,0 +1,8 @@
+﻿namespace Weather.API.Domain.Database.Entities;
+
+public sealed class FavoriteLocationEntity
+{
+    public int Id { get; set; }
+    public long Latitude { get; set; }
+    public long Longitude { get; set; }
+}

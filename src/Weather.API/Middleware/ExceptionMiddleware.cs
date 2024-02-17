@@ -1,8 +1,8 @@
 ﻿using Ardalis.GuardClauses;
 using Newtonsoft.Json;
 using System.Net;
-using WeatherApi.Shared.Http;
-using WeatherApi.Shared.Logging;
+using Weather.API.Domain.Logging;
+using WeatherApi.Domain.Http;
 
 namespace Weather.API.Middleware
 {

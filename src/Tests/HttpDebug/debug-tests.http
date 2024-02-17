@@ -3,11 +3,11 @@
 @host={{hostname}}:{{port}}
 
 ### get current weather request
-GET https://{{host}}/weather/v1/current?latitude=1&longtitude=1
+GET https://{{host}}/weather/v1/current?latitude=1&longitude=1
 Content-Type: application/json
 
 ### get forecast weather request
-GET https://{{host}}/weather/v1/forecast?latitude=1&longtitude=1
+GET https://{{host}}/weather/v1/forecast?latitude=1&longitude=1
 Content-Type: application/json
 
 ### get favorites weather request

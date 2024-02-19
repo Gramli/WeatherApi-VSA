@@ -28,7 +28,7 @@ Example API allows to get actual/forecast weather data by location from [Weather
  * Send request
 
 ## Motivation
-Main motivation is to write practical example of simple API using Vertical Slice Architecture and then compare it to same API designed using Clean Architecture solution.
+Main motivation is to write practical example of simple API using Vertical Slice Architecture and then compare it to same API designed by Clean Architecture.
 
 ## Architecture
 

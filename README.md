@@ -8,12 +8,6 @@ Example API allows to get actual/forecast weather data by location from [Weather
 * [Get Started](#get-started)
 * [Motivation](#motivation)
 * [Architecture](#architecture)
-	* [Minimal API](#minimal-api)
-		* [Pros](#pros)
-		* [Cons](#cons)
-	* [Benefits of Clean Architecture](#benefits-of-clean-architecture)
-	* [Clean Architecture Layers](#clean-architecture-layers)
-		* [Horizontal Diagram (references)](#horizontal-diagram-references)
 * [Technologies](#technologies)
 
 ## Get Started
@@ -35,3 +29,15 @@ Example API allows to get actual/forecast weather data by location from [Weather
 
 ## Motivation
 Main motivation is to write practical example of simple API using Vertical Slice Architecture and then compare it to same API designed using Clean Architecture solution.
+
+## Architecture
+
+## Technologies
+* [ASP.NET Core 8](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-8.0)
+* [Entity Framework Core InMemory](https://learn.microsoft.com/en-us/ef/core/providers/in-memory/?tabs=dotnet-core-cli)
+* [AutoMapper](https://github.com/AutoMapper/AutoMapper)
+* [FluentResuls](https://github.com/altmann/FluentResults)
+* [Validot](https://github.com/bartoszlenar/Validot)
+* [GuardClauses](https://github.com/ardalis/GuardClauses)
+* [Moq](https://github.com/moq/moq4)
+* [Xunit](https://github.com/xunit/xunit)

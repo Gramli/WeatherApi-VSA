@@ -32,6 +32,8 @@ Main motivation is to write practical example of simple API using Vertical Slice
 
 ## Architecture
 
+## Comparsion of Vertical Slice Architecture and Clean Architecture 
+
 ## Technologies
 * [ASP.NET Core 8](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-8.0)
 * [Entity Framework Core InMemory](https://learn.microsoft.com/en-us/ef/core/providers/in-memory/?tabs=dotnet-core-cli)

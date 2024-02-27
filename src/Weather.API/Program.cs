@@ -1,16 +1,20 @@
 using Weather.API.Configuration;
-using Weather.API.EndpointBuilders;
-using Weather.API.Features.Favorites;
+using Weather.API.Features.AddFavorites;
 using Weather.API.Features.Favorites.AddFavorites;
 using Weather.API.Features.Favorites.GetFavorites;
-using Weather.API.Features.Weather;
+using Weather.API.Features.GetFavorites;
+using Weather.API.Features.Weather.GetCurrent;
+using Weather.API.Features.Weather.GetForecast;
 using Weather.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDomain(builder.Configuration);
-builder.Services.AddWeather();
-builder.Services.AddFavorites();
+builder.Services
+    .AddAddFavorites()
+    .AddGetFavorites()
+    .AddGetCurrentWeather()
+    .AddGetForecastWeather();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -33,6 +37,5 @@ app
     .BuildGetFavoriteWeatherEndpoints()
     .BuildGetForecastWeatherEndpoints()
     .BuildGetCurrentWeatherEndpoints();
-
 
 app.Run();

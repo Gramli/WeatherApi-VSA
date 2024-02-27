@@ -2,10 +2,9 @@
 using Weather.API.Domain.Abstractions;
 using Weather.API.Domain.Dtos;
 using Weather.API.Domain.Extensions;
-using Weather.API.Features.Weather.GetCurrent;
 using WeatherApi.Domain.Http;
 
-namespace Weather.API.EndpointBuilders
+namespace Weather.API.Features.Weather.GetCurrent
 {
     public static class GetCurrentEndpointBuilder
     {

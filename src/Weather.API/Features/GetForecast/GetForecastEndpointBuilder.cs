@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Weather.API.Domain.Abstractions;
 using Weather.API.Domain.Extensions;
-using Weather.API.Features.Weather.GetForecast;
 using WeatherApi.Domain.Http;
 
-namespace Weather.API.EndpointBuilders
+namespace Weather.API.Features.Weather.GetForecast
 {
     public static class GetForecastEndpointBuilder
     {

@@ -5,7 +5,7 @@ namespace Weather.API.Features.Weather.GetCurrent
     public sealed class GetCurrentWeatherQuery
     {
         public LocationDto Location { get; init; }
-        public GetCurrentWeatherQuery(long latitude, long longitude)
+        public GetCurrentWeatherQuery(double latitude, double longitude)
         {
             Location = new LocationDto
             {

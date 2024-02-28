@@ -5,7 +5,7 @@ namespace Weather.API.Features.Weather.GetForecast
     public sealed class GetForecastWeatherQuery
     {
         public LocationDto Location { get; init; }
-        public GetForecastWeatherQuery(long latitude, long longitude)
+        public GetForecastWeatherQuery(double latitude, double longitude)
         {
             Location = new LocationDto
             {

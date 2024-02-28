@@ -61,29 +61,11 @@ namespace Weather.API.Domain.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Can&apos;t store location to database. .
-        /// </summary>
-        internal static string CantStoreLocation {
-            get {
-                return ResourceManager.GetString("CantStoreLocation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Problem with external API, can&apos;t retrive data properly..
         /// </summary>
         internal static string ExternalApiError {
             get {
                 return ResourceManager.GetString("ExternalApiError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Stored favorite location is invalid {0}..
-        /// </summary>
-        internal static string InvalidStoredLocation {
-            get {
-                return ResourceManager.GetString("InvalidStoredLocation", resourceCulture);
             }
         }
         

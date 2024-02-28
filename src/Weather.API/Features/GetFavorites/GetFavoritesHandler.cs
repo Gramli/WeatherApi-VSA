@@ -40,20 +40,14 @@ namespace Weather.API.Features.Favorites.GetFavorites
 
         public async Task<HttpDataResponse<FavoritesWeatherDto>> HandleAsync(EmptyRequest request, CancellationToken cancellationToken)
         {
-            var favoriteLocationsResult = await GetFavorites(cancellationToken);
+            var favoriteLocations = await GetFavoritesAync(cancellationToken);
 
-            if (favoriteLocationsResult.IsFailed)
-            {
-                _logger.LogError(LogEvents.FavoriteWeathersGetFromDatabase, favoriteLocationsResult.Errors.JoinToMessage());
-                return HttpDataResponses.AsInternalServerError<FavoritesWeatherDto>(ErrorMessages.ExternalApiError);
-            }
-
-            if (!favoriteLocationsResult.Value.HasAny())
+            if (!favoriteLocations.HasAny())
             {
                 return HttpDataResponses.AsNoContent<FavoritesWeatherDto>();
             }
 
-            return await GetFavoritesAsync(favoriteLocationsResult.Value, cancellationToken);
+            return await GetFavoritesAsync(favoriteLocations, cancellationToken);
 
         }
 
@@ -85,7 +79,7 @@ namespace Weather.API.Features.Favorites.GetFavorites
             if (!_locationValidator.IsValid(location))
             {
                 _logger.LogWarning(LogEvents.FavoriteWeathersGeneral, ErrorLogMessages.InvalidLocation, location);
-                return Result.Fail(string.Format(ErrorMessages.InvalidStoredLocation, location));
+                return Result.Fail(ErrorMessages.RequestValidationError);
             }
 
             var favoriteWeather = await _weatherService.GetCurrentWeather(location, cancellationToken);
@@ -104,11 +98,10 @@ namespace Weather.API.Features.Favorites.GetFavorites
             return favoriteWeather.Value;
         }
 
-        public async Task<Result<IEnumerable<LocationDto>>> GetFavorites(CancellationToken cancellationToken)
+        public async Task<IEnumerable<LocationDto>> GetFavoritesAync(CancellationToken cancellationToken)
         {
             var favoriteLocationEntities = await _weatherContext.FavoriteLocations.ToListAsync(cancellationToken);
-            var resultData = _mapper.Map<List<LocationDto>>(favoriteLocationEntities);
-            return Result.Ok((IEnumerable<LocationDto>)resultData);
+            return _mapper.Map<List<LocationDto>>(favoriteLocationEntities);
         }
     }
 }

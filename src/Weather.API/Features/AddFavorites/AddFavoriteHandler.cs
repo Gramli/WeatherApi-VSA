@@ -1,6 +1,7 @@
 ﻿using Ardalis.GuardClauses;
 using AutoMapper;
 using FluentResults;
+using Microsoft.EntityFrameworkCore;
 using Validot;
 using Weather.API.Domain.Abstractions;
 using Weather.API.Domain.Database.EFContext;
@@ -37,22 +38,29 @@ namespace Weather.API.Features.Favorites.AddFavorites
                 return HttpDataResponses.AsBadRequest<bool>(string.Format(ErrorMessages.RequestValidationError, request));
             }
 
-            var addResult = await AddFavoriteLocation(request, cancellationToken);
+            var addResult = await AddFavoriteLocationSafeAsync(request, cancellationToken);
             if (addResult.IsFailed)
             {
-                _logger.LogError(LogEvents.FavoriteWeathersStoreToDatabase, addResult.Errors.JoinToMessage());
-                return HttpDataResponses.AsInternalServerError<bool>(ErrorMessages.CantStoreLocation);
+                return HttpDataResponses.AsInternalServerError<bool>("Location was not stored in database.");
             }
 
             return HttpDataResponses.AsOK(true);
         }
 
-        public async Task<Result<int>> AddFavoriteLocation(AddFavoriteCommand addFavoriteCommand, CancellationToken cancellationToken)
+        public async Task<Result<int>> AddFavoriteLocationSafeAsync(AddFavoriteCommand addFavoriteCommand, CancellationToken cancellationToken)
         {
             var locationEntity = _mapper.Map<FavoriteLocationEntity>(addFavoriteCommand.Location);
-            await _weatherContext.FavoriteLocations.AddAsync(locationEntity);
-            await _weatherContext.SaveChangesAsync(cancellationToken);
-            return Result.Ok(locationEntity.Id);
+            try
+            {
+                await _weatherContext.FavoriteLocations.AddAsync(locationEntity);
+                await _weatherContext.SaveChangesAsync(cancellationToken);
+                return Result.Ok(locationEntity.Id);
+            }
+            catch(DbUpdateException ex)
+            {
+                _logger.LogError(LogEvents.FavoriteWeathersStoreToDatabase, ex, "Can't store location into database.");
+                return Result.Fail(ex.Message);
+            }
         }
     }
 }

@@ -117,14 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CantStoreLocation" xml:space="preserve">
-    <value>Can't store location to database. </value>
-  </data>
   <data name="ExternalApiError" xml:space="preserve">
     <value>Problem with external API, can't retrive data properly.</value>
-  </data>
-  <data name="InvalidStoredLocation" xml:space="preserve">
-    <value>Stored favorite location is invalid {0}.</value>
   </data>
   <data name="RequestValidationError" xml:space="preserve">
     <value>Invalid request data: {0}.</value>

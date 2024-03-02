@@ -12,9 +12,9 @@ namespace Weather.API.Features.AddFavorites
         public static IEndpointRouteBuilder BuildAddFavoriteWeatherEndpoints(this IEndpointRouteBuilder endpointRouteBuilder)
         {
             endpointRouteBuilder.MapPost("v1/favorite",
-                async ([FromBody] AddFavoriteCommand addFavoriteCommand, [FromServices] IRequestHandler<bool, AddFavoriteCommand> handler, CancellationToken cancellationToken) =>
+                async ([FromBody] AddFavoriteCommand addFavoriteCommand, [FromServices] IRequestHandler<int, AddFavoriteCommand> handler, CancellationToken cancellationToken) =>
                     await handler.SendAsync(addFavoriteCommand, cancellationToken))
-                        .Produces<DataResponse<bool>>()
+                        .Produces<DataResponse<int>>()
                         .WithName("AddFavorite")
                         .WithTags("Setters");
 
@@ -23,7 +23,7 @@ namespace Weather.API.Features.AddFavorites
 
         public static IServiceCollection AddAddFavorites(this IServiceCollection serviceCollection) 
             => serviceCollection
-                .AddScoped<IRequestHandler<bool, AddFavoriteCommand>, AddFavoriteHandler>()
+                .AddScoped<IRequestHandler<int, AddFavoriteCommand>, AddFavoriteHandler>()
                 .AddValidotSingleton<IValidator<AddFavoriteCommand>, AddFavoriteCommandSpecificationHolder, AddFavoriteCommand>();
 
     }

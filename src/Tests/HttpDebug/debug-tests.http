@@ -24,3 +24,7 @@ Content-Type: application/json
     "longitude": -78.5
   }
 }
+
+### add favorites weather request
+DELETE https://{{host}}/weather/v1/favorite/1
+Content-Type: application/json

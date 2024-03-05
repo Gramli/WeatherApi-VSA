@@ -18,10 +18,4 @@
     <PackageReference Include="Validot" Version="2.4.1" />
   </ItemGroup>
 
-	<ItemGroup>
-		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
-			<_Parameter1>Wheaterbit.Client.UnitTests</_Parameter1>
-		</AssemblyAttribute>
-	</ItemGroup>
-
 </Project>

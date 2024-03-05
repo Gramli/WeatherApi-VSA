@@ -2,6 +2,7 @@
  <img align="left" width="116" height="116" src=".\doc\img\weatherApi_icon.png" />
 
 # Vertical Slice Architecture WeatherApi
+[![.NET Build and Test](https://github.com/Gramli/WeatherApi-VSA/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Gramli/WeatherApi-VSA/actions/workflows/dotnet.yml)
 
 REST API solution demonstrates how to create API with Vertical Slice Architecture, minimal API and various of design patterns.  
 

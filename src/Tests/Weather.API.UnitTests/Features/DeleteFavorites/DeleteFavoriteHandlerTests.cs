@@ -5,7 +5,6 @@ using System.Net;
 using Validot;
 using Weather.API.Domain.Abstractions;
 using Weather.API.Domain.Database.Entities;
-using Weather.API.Domain.Dtos;
 using Weather.API.Features.DeleteFavorites;
 using Weather.API.UnitTests.Domain.Database;
 
@@ -15,7 +14,6 @@ namespace Weather.API.UnitTests.Features.DeleteFavorites
     public class DeleteFavoriteHandlerTests
     {
         private readonly Mock<IValidator<DeleteFavoriteCommand>> _deleteFavoriteCommandValidatorMock;
-        private readonly Mock<ILogger<DeleteFavoriteHandler>> _loggerMock;
         private readonly Mock<TestWeatherContext> _weatherContextMock;
         private readonly Mock<DbSet<FavoriteLocationEntity>> _favoriteLocationEntityDbSetMock;
 
@@ -23,11 +21,11 @@ namespace Weather.API.UnitTests.Features.DeleteFavorites
         public DeleteFavoriteHandlerTests()
         {
             _deleteFavoriteCommandValidatorMock = new();
-            _loggerMock = new();
+            var loggerMock = new Mock<ILogger<DeleteFavoriteHandler>>();
             _weatherContextMock = new();
             _favoriteLocationEntityDbSetMock = new();
 
-            _uut = new DeleteFavoriteHandler(_deleteFavoriteCommandValidatorMock.Object, _loggerMock.Object, _weatherContextMock.Object);
+            _uut = new DeleteFavoriteHandler(_deleteFavoriteCommandValidatorMock.Object, loggerMock.Object, _weatherContextMock.Object);
         }
 
         [Fact]
@@ -55,7 +53,6 @@ namespace Weather.API.UnitTests.Features.DeleteFavorites
 
             _deleteFavoriteCommandValidatorMock.Setup(x => x.IsValid(deleteFavoriteCommand)).Returns(true);
 
-            var favoriteLocation = new FavoriteLocationEntity();
             _favoriteLocationEntityDbSetMock.Setup(x => x.FindAsync(It.IsAny<int>(), CancellationToken.None)).ThrowsAsync(new DbUpdateException());
             _weatherContextMock.Setup(x => x.FavoriteLocations).Returns(_favoriteLocationEntityDbSetMock.Object);
 

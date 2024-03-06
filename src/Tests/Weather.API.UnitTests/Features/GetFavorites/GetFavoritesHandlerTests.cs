@@ -115,7 +115,7 @@ namespace Weather.API.UnitTests.Features.GetFavorites
             var failMessage = "Some fail message";
             var locationDto = new LocationDto { Latitude = 1, Longitude = 1 };
 
-            var favoriteLocations = new List<FavoriteLocationEntity>() { new(), new FavoriteLocationEntity { Latitude = locationDto.Latitude, Longitude = locationDto.Longitude } };
+            var favoriteLocations = new List<FavoriteLocationEntity> { new(), new FavoriteLocationEntity { Latitude = locationDto.Latitude, Longitude = locationDto.Longitude } };
             _favoriteLocationEntityDbSetMock.SetupMock(favoriteLocations);
             _weatherContextMock.Setup(x => x.FavoriteLocations).Returns(_favoriteLocationEntityDbSetMock.Object);
             _mapperMock.Setup(x => x.Map<LocationDto>(It.Is<FavoriteLocationEntity>(y=> y.Latitude!= locationDto.Latitude))).Returns(new LocationDto());

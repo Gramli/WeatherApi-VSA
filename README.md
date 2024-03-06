@@ -3,7 +3,7 @@
 
 # Vertical Slice Architecture WeatherApi
 [![.NET Build and Test](https://github.com/Gramli/WeatherApi-VSA/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Gramli/WeatherApi-VSA/actions/workflows/dotnet.yml)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/748a25879e324dfca7232aae16c33eaa)](https://app.codacy.com/gh/Gramli/WeatherApi-VSA/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/748a25879e324dfca7232aae16c33eaa)](https://app.codacy.com/gh/Gramli/WeatherApi-VSA/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)  
 
 REST API solution demonstrates how to create API with Vertical Slice Architecture, minimal API and various of design patterns.  
 
@@ -36,8 +36,18 @@ Example API allows to get actual/forecast weather data by location from [Weather
 Main motivation is to write practical example of simple API using Vertical Slice Architecture and then compare it to same API designed by Clean Architecture.
 
 ## Architecture
+Project folows **[Vertical Slice Architecture](https://www.jimmybogard.com/vertical-slice-architecture/)** which instead of separation of technical concerns it encapsulating business logic of specific feature into vertical slice. So for example against [Clean Architecture](https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures#clean-architecture), one vertical slice is cross section of all layers like in picture below.
 
 ![Project Vertical Slice Architecture Diagram](./doc/img/chart.png)
+
+As this project is simple API, I decided to represent one vertical slice (or feature) as CRUD operation with some aditional business logic. Vertical slices should'nt reference each other so shared code is in Domain folder, for example WeatherService which is adapter to Weatherbit.Client project or DbContext is in Domain.
+Every feature(slice) folder contains a similiar structure:
+* request query or command - holds request parameters/data
+* request handler - implementation of business logic
+* specification holder - validation rules
+* configuration - registering of classes into IoC container and minimal api endpoints.
+
+Some slices also contains Dto objects, mapper profiles etc.., just all specific to feature(slice).
 
 ## Comparsion of Vertical Slice Architecture and Clean Architecture
 

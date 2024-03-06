@@ -5,10 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using Validot;
 using Weather.API.Domain.Abstractions;
 using Weather.API.Domain.Database.EFContext;
+using Weather.API.Domain.Database.Entities;
 using Weather.API.Domain.Dtos;
 using Weather.API.Domain.Extensions;
 using Weather.API.Domain.Logging;
 using Weather.API.Domain.Resources;
+using Weather.API.Features.GetFavorites;
 using WeatherApi.Domain.Http;
 
 namespace Weather.API.Features.Favorites.GetFavorites
@@ -40,7 +42,7 @@ namespace Weather.API.Features.Favorites.GetFavorites
 
         public async Task<HttpDataResponse<FavoritesWeatherDto>> HandleAsync(EmptyRequest request, CancellationToken cancellationToken)
         {
-            var favoriteLocations = await GetFavoritesAync(cancellationToken);
+            var favoriteLocations = await _weatherContext.FavoriteLocations.ToListAsync(cancellationToken);
 
             if (!favoriteLocations.HasAny())
             {
@@ -51,14 +53,14 @@ namespace Weather.API.Features.Favorites.GetFavorites
 
         }
 
-        private async Task<HttpDataResponse<FavoritesWeatherDto>> GetFavoritesAsync(IEnumerable<LocationDto> favoriteLocationsResult, CancellationToken cancellationToken)
+        private async Task<HttpDataResponse<FavoritesWeatherDto>> GetFavoritesAsync(IEnumerable<FavoriteLocationEntity> favoriteLocationsResult, CancellationToken cancellationToken)
         {
-            var result = new List<CurrentWeatherDto>();
+            var result = new List<FavoriteCurrentWeatherDto>();
             var errorMessages = new List<string>();
 
             await favoriteLocationsResult.ForEachAsync(async (location) =>
             {
-                var favoriteWeather = await GetWeatherAsync(location, cancellationToken);
+                var favoriteWeather = await GetWeatherAsync(_mapper.Map<LocationDto>(location), cancellationToken);
 
                 if (favoriteWeather.IsFailed)
                 {
@@ -66,7 +68,15 @@ namespace Weather.API.Features.Favorites.GetFavorites
                     return;
                 }
 
-                result.Add(favoriteWeather.Value);
+                result.Add(new FavoriteCurrentWeatherDto
+                {
+                    CityName = favoriteWeather.Value.CityName,
+                    DateTime = favoriteWeather.Value.DateTime,
+                    Sunrise = favoriteWeather.Value.Sunrise,
+                    Sunset = favoriteWeather.Value.Sunset,
+                    Id = location.Id,
+                    Temperature = favoriteWeather.Value.Temperature
+                });
             });
 
             return result.Any() ?

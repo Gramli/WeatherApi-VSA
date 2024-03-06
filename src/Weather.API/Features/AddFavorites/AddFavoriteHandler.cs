@@ -13,7 +13,7 @@ using WeatherApi.Domain.Http;
 
 namespace Weather.API.Features.Favorites.AddFavorites
 {
-    internal sealed class AddFavoriteHandler : IRequestHandler<bool, AddFavoriteCommand>
+    internal sealed class AddFavoriteHandler : IRequestHandler<int, AddFavoriteCommand>
     {
         private readonly IMapper _mapper;
         private readonly WeatherContext _weatherContext;
@@ -31,20 +31,20 @@ namespace Weather.API.Features.Favorites.AddFavorites
             _mapper = Guard.Against.Null(mapper);
         }
 
-        public async Task<HttpDataResponse<bool>> HandleAsync(AddFavoriteCommand request, CancellationToken cancellationToken)
+        public async Task<HttpDataResponse<int>> HandleAsync(AddFavoriteCommand request, CancellationToken cancellationToken)
         {
             if (!_addFavoriteCommandValidator.IsValid(request))
             {
-                return HttpDataResponses.AsBadRequest<bool>(string.Format(ErrorMessages.RequestValidationError, request));
+                return HttpDataResponses.AsBadRequest<int>(string.Format(ErrorMessages.RequestValidationError, request));
             }
 
             var addResult = await AddFavoriteLocationSafeAsync(request, cancellationToken);
             if (addResult.IsFailed)
             {
-                return HttpDataResponses.AsInternalServerError<bool>("Location was not stored in database.");
+                return HttpDataResponses.AsInternalServerError<int>("Location was not stored in database.");
             }
 
-            return HttpDataResponses.AsOK(true);
+            return HttpDataResponses.AsOK(addResult.Value);
         }
 
         public async Task<Result<int>> AddFavoriteLocationSafeAsync(AddFavoriteCommand addFavoriteCommand, CancellationToken cancellationToken)

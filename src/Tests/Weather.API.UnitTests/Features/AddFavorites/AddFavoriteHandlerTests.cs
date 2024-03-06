@@ -22,14 +22,14 @@ namespace Weather.API.UnitTests.Features.AddFavorites
         private readonly Mock<IMapper> _mapperMock;
         private readonly Mock<DbSet<FavoriteLocationEntity>> _favoriteLocationEntityDbSetMock;
 
-        private readonly IRequestHandler<bool, AddFavoriteCommand> _uut;
+        private readonly IRequestHandler<int, AddFavoriteCommand> _uut;
         public AddFavoriteHandlerTests()
         {
             _favoriteLocationEntityDbSetMock = new();
             _weatherContextMock = new();
             _weatherContextMock.Setup(x => x.FavoriteLocations).Returns(_favoriteLocationEntityDbSetMock.Object);
 
-            _addFavoriteCommandValidatorMock = new Mock<IValidator<AddFavoriteCommand>>();
+            _addFavoriteCommandValidatorMock = new();
             _loggerMock = new();
             _mapperMock = new();
 
@@ -51,7 +51,6 @@ namespace Weather.API.UnitTests.Features.AddFavorites
             //Assert
             Assert.Equal(HttpStatusCode.BadRequest, result.StatusCode);
             Assert.Single(result.Errors);
-            Assert.False(result.Data);
             _addFavoriteCommandValidatorMock.Verify(x => x.IsValid(It.Is<AddFavoriteCommand>(y => y.Equals(addFavoriteCommand))), Times.Once);
         }
 
@@ -72,7 +71,6 @@ namespace Weather.API.UnitTests.Features.AddFavorites
             //Assert
             Assert.Equal(HttpStatusCode.InternalServerError, result.StatusCode);
             Assert.Single(result.Errors);
-            Assert.False(result.Data);
             _addFavoriteCommandValidatorMock.Verify(x => x.IsValid(It.Is<AddFavoriteCommand>(y => y.Equals(addFavoriteCommand))), Times.Once);
             _loggerMock.VerifyLog(LogLevel.Error, LogEvents.FavoriteWeathersStoreToDatabase, Times.Once());
         }
@@ -96,7 +94,6 @@ namespace Weather.API.UnitTests.Features.AddFavorites
             //Assert
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
             Assert.Empty(result.Errors);
-            Assert.True(result.Data);
             _addFavoriteCommandValidatorMock.Verify(x => x.IsValid(It.Is<AddFavoriteCommand>(y => y.Equals(addFavoriteCommand))), Times.Once);
             _favoriteLocationEntityDbSetMock.Verify(x => x.AddAsync(It.IsAny<FavoriteLocationEntity>(), It.IsAny<CancellationToken>()), Times.Once);
         }

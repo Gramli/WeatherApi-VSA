@@ -7,7 +7,6 @@ using Weather.API.Domain.Database.EFContext;
 using Weather.API.Domain.Extensions;
 using Weather.API.Domain.Logging;
 using Weather.API.Domain.Resources;
-using Weather.API.Features.Favorites.AddFavorites;
 using WeatherApi.Domain.Http;
 
 namespace Weather.API.Features.DeleteFavorites
@@ -16,10 +15,10 @@ namespace Weather.API.Features.DeleteFavorites
     {
         private readonly WeatherContext _weatherContext;
         private readonly IValidator<DeleteFavoriteCommand> _validator;
-        private readonly ILogger<AddFavoriteHandler> _logger;
+        private readonly ILogger<DeleteFavoriteHandler> _logger;
         public DeleteFavoriteHandler(
             IValidator<DeleteFavoriteCommand> validator,
-            ILogger<AddFavoriteHandler> logger,
+            ILogger<DeleteFavoriteHandler> logger,
             WeatherContext weatherContext)
         {
             _validator = Guard.Against.Null(validator);

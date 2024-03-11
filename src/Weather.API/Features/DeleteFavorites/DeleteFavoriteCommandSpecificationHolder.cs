@@ -8,10 +8,10 @@ namespace Weather.API.Features.DeleteFavorites
 
         public DeleteFavoriteCommandSpecificationHolder()
         {
-            Specification<DeleteFavoriteCommand> addFavoriteCommandSpecification = s => s
+            Specification<DeleteFavoriteCommand> deleteFavoriteCommandSpecification = s => s
                 .Member(m => m.Id, r => r.NonNegative());
 
-            Specification = addFavoriteCommandSpecification;
+            Specification = deleteFavoriteCommandSpecification;
         }
     }
 }

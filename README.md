@@ -52,8 +52,17 @@ Some slices also contains Dto objects, mapper profiles etc.., just all specific 
 ## Comparsion of Vertical Slice Architecture and Clean Architecture
 
 ### Pull Request of new CRUD endpoint
+In Progress..
+Clean Architecture (CA) - [Pull Request](https://github.com/Gramli/WeatherApi/pull/2)
+Vertical Slice Architecture (VSA) - [Pull Request](https://github.com/Gramli/WeatherApi-VSA/pull/1)
+
+Both are just small APIs, but there is clearly one big difference. CA has many more touched files, which could result in bugs in large projects. Therefore, it is crucial for CA to follow SOLID principles and have good code coverage.
+In VSA, I simply add files to my new feature folder (except when editing other features because of the return type, which is the same as in CA). In large-scale projects, there can be a problem with code duplication, which is also a crucial issue. This can be resolved by moving the code to the domain, but then the domain can become really big.
+From this example, we can also see that VSA is a great fit for small or CRUD APIs because of its simplicity and lack of many abstractions. When we follow the same folder structure, it can become a nice and clear solution.
 ### Unit Testing
+In Progress..
 ### Conclusion
+In Progress..
 ## Technologies
 * [ASP.NET Core 8](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-8.0)
 * [Entity Framework Core InMemory](https://learn.microsoft.com/en-us/ef/core/providers/in-memory/?tabs=dotnet-core-cli)

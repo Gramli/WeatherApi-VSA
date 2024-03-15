@@ -55,13 +55,13 @@ Some slices also contains Dto objects, mapper profiles etc.., just all specific 
 In Progress..
 
 Clean Architecture (CA) - [Pull Request](https://github.com/Gramli/WeatherApi/pull/2)
+
 Vertical Slice Architecture (VSA) - [Pull Request](https://github.com/Gramli/WeatherApi-VSA/pull/1)
 
-Both are just small APIs, but there is clearly one big difference. CA has many more touched files, which could result in bugs in large projects. Therefore, it is crucial for CA to follow SOLID principles and have good code coverage.
-
+Both are just small APIs, but there is clearly one big difference. CA has almost twice more touched files, which could result in bugs in large projects. Therefore, it is crucial for CA to follow SOLID principles and have good code coverage.
 In VSA, I simply add files to my new feature folder (except when editing other features because of the return type, which is the same as in CA). In large-scale projects, there can be a problem with code duplication, which is also a crucial issue. This can be resolved by moving the code to the domain, but then the domain can become really big.
 
-From this example, we can also see that VSA is a great fit for small or CRUD APIs because of its simplicity and lack of many abstractions. When we follow the same folder structure, it can become a nice and clear solution.
+Based on the PR comparison, we can also see that VSA is well-suited for small or CRUD APIs due to its simplicity and minimal use of abstractions. When we adhere to the same folder structure, it can result in a clean and clear solution.
 ### Unit Testing
 In Progress..
 ### Conclusion

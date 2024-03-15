@@ -52,20 +52,20 @@ Some slices also contains Dto objects, mapper profiles etc.., just all specific 
 ## Comparsion of Vertical Slice Architecture and Clean Architecture
 
 ### Pull Request of new CRUD endpoint
-In Progress..
-
-Clean Architecture (CA) - [Pull Request](https://github.com/Gramli/WeatherApi/pull/2)
+Clean Architecture - [Pull Request](https://github.com/Gramli/WeatherApi/pull/2)
 
 Vertical Slice Architecture (VSA) - [Pull Request](https://github.com/Gramli/WeatherApi-VSA/pull/1)
 
-Both are just small APIs, but there is clearly one big difference. CA has almost twice more touched files, which could result in bugs in large projects. Therefore, it is crucial for CA to follow SOLID principles and have good code coverage.
-In VSA, I simply add files to my new feature folder (except when editing other features because of the return type, which is the same as in CA). In large-scale projects, there can be a problem with code duplication, which is also a crucial issue. This can be resolved by moving the code to the domain, but then the domain can become really big.
+Both [Clean Architecture Weather Api (CA)](https://github.com/Gramli/WeatherApi) and [Vertical Slice Architecture Weather Api (VSA)](https://github.com/Gramli/WeatherApi-VSA) are just small APIs, but there is clearly one big difference. CA has almost twice more touched files, which could result in bugs. Therefore, it is crucial for CA to follow SOLID principles and have good code coverage.
+In VSA, I add files to my new feature folder, except when editing other features due to the return type (which is the same as in CA). However, in large-scale projects, code duplication can become a significant issue. One way to resolve this issue is by moving the code to the domain. However, this can cause the domain to become excessively large.
 
 Based on the PR comparison, we can also see that VSA is well-suited for small or CRUD APIs due to its simplicity and minimal use of abstractions. When we adhere to the same folder structure, it can result in a clean and clear solution.
 ### Unit Testing
 In Progress..
+In CA, unit testing is easy thanks to the high level of abstractions. However, as the project grows, it can result in a lot of repetitive work. Fortunately, with the support of AI, this issue can be alleviated.
 ### Conclusion
 In Progress..
+
 ## Technologies
 * [ASP.NET Core 8](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-8.0)
 * [Entity Framework Core InMemory](https://learn.microsoft.com/en-us/ef/core/providers/in-memory/?tabs=dotnet-core-cli)

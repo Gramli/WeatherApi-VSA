@@ -57,7 +57,7 @@ Clean Architecture - [Pull Request](https://github.com/Gramli/WeatherApi/pull/2)
 Vertical Slice Architecture (VSA) - [Pull Request](https://github.com/Gramli/WeatherApi-VSA/pull/1)
 
 Both [Clean Architecture Weather Api (CA)](https://github.com/Gramli/WeatherApi) and [Vertical Slice Architecture Weather Api (VSA)](https://github.com/Gramli/WeatherApi-VSA) are just small APIs, but there is clearly one big difference. CA has almost twice more touched files, which could result in bugs. Therefore, it is crucial for CA to follow SOLID principles and have good code coverage.
-In VSA, I add files to my new feature folder, except when editing other features due to the return type (which is the same as in CA). However, in large-scale projects, code duplication can become a significant issue. One way to resolve this issue is by moving the code to the domain. However, this can cause the domain to become excessively large.
+In VSA, I add files to my new feature folder, except when editing other features due to the return type (which is the same as in CA). However, as a project grow, code duplication can become a significant issue. One way to resolve this issue is by moving the code to the domain. However, this can cause the domain to become excessively large.
 
 Based on the PR comparison, we can also see that VSA is well-suited for small or CRUD APIs due to its simplicity and minimal use of abstractions. When we adhere to the same folder structure, it can result in a clean and clear solution.
 ### Unit Testing
@@ -66,7 +66,7 @@ In CA, unit testing is easy thanks to the high level of abstractions. However, a
 ### Conclusion
 In comparison, VSA resolves the issue of CA with touching all layers for just one feature. However, on the other hand, there is a risk of code duplication which CA doesn't have, thanks to splitting the code into handlers, services, etc. Unit testing is easier and cleaner in CA, but it results in repetition. The solution for these issues can be to create a hybrid of both architectures. In the base, use VSA with a feature folder structure and follow the rule that features do not reference each other. From CA, use a good level of abstractions in features where needed; we don't have to create abstractions in simple CRUD operations.
 
-As I have a lot of experience with CA in middle-sized and large-scale projects and I am satisfied with CA, but there must be emphasis on maintaining the structure. It means following SOLID principles and patterns like CQRS, Repository, Factory, etc. Then the project is well maintainable and testable. I am new to VSA, but I am enthusiastic about it. I will definitely use it in small projects.
+As I have a lot of experience with CA in small and middle-sized projects, I am satisfied with CA, but there must be emphasis on maintaining the structure. It means following SOLID principles and patterns like CQRS, Repository, Factory, etc. Then the project is well maintainable and testable. I am new to VSA, but I am enthusiastic about it. I will definitely use it in small projects.
 
 ## Technologies
 * [ASP.NET Core 8](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-8.0)

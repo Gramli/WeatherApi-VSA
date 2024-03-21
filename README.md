@@ -75,8 +75,8 @@ In comparison, VSA resolves the issue of CA by touching all layers for just one 
   </thead>
   <tbody>
   <tr>
-   <td><img align="middle" src="./doc/img/hybrid_VSA_base.png" /></td>
-   <td><img align="middle" src="./doc/img/hybrid_CA_base.png" /></td>
+   <td style="text-align: center;"><img align="middle" src="./doc/img/hybrid_VSA_base.png" /></td>
+   <td style="text-align: center;"><img align="middle" src="./doc/img/hybrid_CA_base.png" /></td>
 </tr>
 <tr>
  <td>Shared folders like Common and Configuration could become really big because they are shared between all features. But we have the power to create new features with a small or even without a structure, just with a few files. Also, we touch only the feature folder so we have a lower risk of creating bugs, but can still create some code duplications.</td>
@@ -84,11 +84,6 @@ In comparison, VSA resolves the issue of CA by touching all layers for just one 
 </tr>
   </tbody>
 </table>
-
-Vertical Slice Architecture Hybrid First Approach           |  Clean Architecture Hybrid First Approach
-:-----------------------------:|:-----------------------------:
-<img width="200" src="./doc/img/hybrid_VSA_base.png" />|<img width="200" src="./doc/img/hybrid_CA_base.png" />
-Shared folders like Common and Configuration could become really big because they are shared between all features. But we have the power to create new features with a small or even without a structure, just with a few files. Also, we touch only the feature folder so we have a lower risk of creating bugs, but can still create some code duplications. | The CA hybrid architecture structure is way bigger; it forces us to adhere to the structure so we lower the risk of code duplication, but we have to touch all layers even in the feature-related folder.
 
 Both hybrid approaches lower the risks and disadvantages but do not resolve them. So we still need to choose which architecture suits our project best.
 

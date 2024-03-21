@@ -66,6 +66,22 @@ In CA, unit testing is easy thanks to the high level of abstractions. However, a
 ### Conclusion
 In comparison, VSA resolves the issue of CA by touching all layers for just one feature. However, on the other hand, there is a risk of code duplication which CA reduces by splitting the code into layers and then into reusable services. Unit testing is easier and cleaner in CA, but it results in repetition. Unit testing in VSA could be difficult in cases when we put too much logic into one file. The solution for these issues can be to create a hybrid of both architectures. The first approach is to use VSA in the base with a feature folder structure and follow the rule that features do not reference each other. From CA, use a good level of abstractions in features where needed; we don't have to create abstractions in simple CRUD operations. The second approach could be to use CA as the base architecture and create a 'Feature' folder in every layer. Then, put feature-related logic for each layer into its respective 'Feature' folder and of course follow the rule that features do not reference each other.
 
+<table>
+  <thead>
+    <tr>
+      <th width="500px">Vertical Slice Architecture Hybrid First Approach </th>
+      <th width="500px">Clean Architecture Hybrid First Approach</th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+   <td><img src="./doc/img/hybrid_VSA_base.png" /></td>
+   <td><img src="./doc/img/hybrid_CA_base.png" /></td>
+</tr>
+
+  </tbody>
+</table>
+
 Vertical Slice Architecture Hybrid First Approach           |  Clean Architecture Hybrid First Approach
 :-----------------------------:|:-----------------------------:
 <img width="200" src="./doc/img/hybrid_VSA_base.png" />|<img width="200" src="./doc/img/hybrid_CA_base.png" />

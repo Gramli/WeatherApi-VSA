@@ -13,6 +13,11 @@ Example API allows to get actual/forecast weather data by location from [Weather
 * [Get Started](#get-started)
 * [Motivation](#motivation)
 * [Architecture](#architecture)
+* [Comparsion of Vertical Slice Architecture and Clean Architecture](#comparsion-of-vertical-slice-architecture-and-clean-architecture)
+ * [Pull Request of new CRUD endpoint](#pull-request-of-new-crud-endpoint)
+ * [Unit Testing](#unit-testing)
+ * [Comparsion Conclusion](#comparsion-conclusion)
+* [Hybrid Approaches](#hybrid-approaches)
 * [Technologies](#technologies)
 
 ## Get Started
@@ -63,8 +68,12 @@ Based on the PR comparison, we can also see that VSA is well-suited for tiny or 
 ### Unit Testing
 In CA, unit testing is easy thanks to the high level of abstractions. However, as the project grows, it can result in a lot of repetitive work. Fortunately, with the support of AI, this issue can be alleviated. In VSA, it depends. When we look at this example, everything is within the handler (business logic, access to the database). Therefore, for growing project, this is not a good approach because writing and maintaining unit tests can become increasingly difficult even for the AI. But for this simple example, it fits well.
 
-### Conclusion
-In comparison, VSA resolves the issue of CA by touching all layers for just one feature. However, on the other hand, there is a risk of code duplication which CA reduces by splitting the code into layers and then into reusable services. Unit testing is easier and cleaner in CA, but it results in repetition. Unit testing in VSA could be difficult in cases when we put too much logic into one file. The solution for these issues can be to create a hybrid of both architectures. The first approach is to use VSA in the base with a feature folder structure and follow the rule that features do not reference each other. From CA, use a good level of abstractions in features where needed; we don't have to create abstractions in simple CRUD operations. The second approach could be to use CA as the base architecture and create a 'Feature' folder in every layer. Then, put feature-related logic for each layer into its respective 'Feature' folder and of course follow the rule that features do not reference each other.
+### Comparsion Conclusion
+In comparison, VSA resolves the issue of CA by touching all layers for just one feature. However, on the other hand, there is a risk of code duplication which CA reduces by splitting the code into layers and then into reusable services. Unit testing is easier and cleaner in CA, but it results in repetition. Unit testing in VSA could be difficult in cases when we put too much logic into one file. The solution for these issues can be to create a hybrid of both architectures.
+
+## Hybrid Approaches
+
+The first approach is to use VSA in the base with a feature folder structure and follow the rule that features do not reference each other. From CA, use a good level of abstractions in features where needed; we don't have to create abstractions in simple CRUD operations. The second approach could be to use CA as the base architecture and create a 'Feature' folder in every layer. Then, put feature-related logic for each layer into its respective 'Feature' folder and of course follow the rule that features do not reference each other.
 
 <table>
   <thead>
@@ -75,19 +84,19 @@ In comparison, VSA resolves the issue of CA by touching all layers for just one 
   </thead>
   <tbody>
   <tr>
-   <td style="text-align: center;"><img align="middle" src="./doc/img/hybrid_VSA_base.png" /></td>
-   <td style="text-align: center;"><img align="middle" src="./doc/img/hybrid_CA_base.png" /></td>
+   <td><p align="center"><img src="./doc/img/hybrid_VSA_base.png" /></p></td>
+   <td><p align="center"><img src="./doc/img/hybrid_CA_base.png" /></p></td>
 </tr>
 <tr>
- <td>Shared folders like Common and Configuration could become really big because they are shared between all features. But we have the power to create new features with a small or even without a structure, just with a few files. Also, we touch only the feature folder so we have a lower risk of creating bugs, but can still create some code duplications.</td>
- <td>The CA hybrid architecture structure is way bigger; it forces us to adhere to the structure so we lower the risk of code duplication, but we have to touch all layers even in the feature-related folder.</td>
+ <td>Shared folders like Common and Configuration could become quite large because they are shared between all features. However, we have the flexibility to create new features with a small or even no structure, using just a few files. Additionally, we only need to touch the feature folder, which reduces the risk of introducing bugs, although it may still result in some code duplication.</td>
+ <td>The CA hybrid architecture structure is much larger, as it requires us to adhere to the structure in order to reduce the risk of code duplication and maintain a uniform structure. However, we have to touch all layers, even in the feature-related folder. Additionally, we are losing the ability to create small features without adhering to the structure.</td>
 </tr>
   </tbody>
 </table>
 
-Both hybrid approaches lower the risks and disadvantages but do not resolve them. So we still need to choose which architecture suits our project best.
+Both hybrid approaches reduce the risks and disadvantages, but do not completely resolve them. Therefore, **we still need to choose which architecture best suits our project**.
 
-
+## Conclusion
 As I have a lot of experience with CA in small and middle-sized projects, I am satisfied with CA first hybrid approach, but there must be emphasis on maintaining the structure. It means following SOLID principles and patterns like CQRS, Repository, Factory, etc. Then the project is well maintainable and testable. I am new to VSA, but I am enthusiastic about it. I will definitely use it in tiny projects.
 
 ## Technologies

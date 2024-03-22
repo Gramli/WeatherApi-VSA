@@ -98,6 +98,7 @@ Both hybrid approaches reduce the risks and disadvantages, but do not completely
 
 ## Conclusion
 VSA is still new to me, but I am enthusiastic about it and I believe it is the best fit for small projects. While I have a lot of experience with CA in small and medium-sized projects, I must say that it is a good fit and I have always been satisfied with it. However, it is important to emphasize the need for maintaining the structure, which involves following SOLID principles and patterns such as CQRS, Repository, DI, etc. By doing so, the project can be well-maintained.
+
 And lastly, the most important sentence at the end: **the architecture of a project depends on the project's needs.**
 
 ## Technologies

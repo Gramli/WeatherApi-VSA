@@ -1,4 +1,3 @@
- # In Progress..
  <img align="left" width="116" height="116" src=".\doc\img\weatherApi_icon.png" />
 
 # Vertical Slice Architecture WeatherApi
@@ -14,10 +13,11 @@ Example API allows to get actual/forecast weather data by location from [Weather
 * [Motivation](#motivation)
 * [Architecture](#architecture)
 * [Comparsion of Vertical Slice Architecture and Clean Architecture](#comparsion-of-vertical-slice-architecture-and-clean-architecture)
- * [Pull Request of new CRUD endpoint](#pull-request-of-new-crud-endpoint)
- * [Unit Testing](#unit-testing)
- * [Comparsion Conclusion](#comparsion-conclusion)
+   - [Pull Request of new CRUD endpoint](#pull-request-of-new-crud-endpoint)
+   - [Unit Testing](#unit-testing)
+   - [Comparsion Conclusion](#comparsion-conclusion)
 * [Hybrid Approaches](#hybrid-approaches)
+* [Conclusion](#conclusion)
 * [Technologies](#technologies)
 
 ## Get Started
@@ -97,8 +97,8 @@ The first approach is to use VSA in the base with a feature folder structure and
 Both hybrid approaches reduce the risks and disadvantages, but do not completely resolve them. Therefore, **we still need to choose which architecture best suits our project**.
 
 ## Conclusion
-As I have a lot of experience with CA in small and middle-sized projects, I am satisfied with CA first hybrid approach, but there must be emphasis on maintaining the structure. It means following SOLID principles and patterns like CQRS, Repository, Factory, etc. and have a good code coverage. Then the project is well maintainable. 
-I am new to VSA, but I am enthusiastic about it. I will definitely use it in tiny projects.
+VSA is still new to me, but I am enthusiastic about it and I believe it is the best fit for small projects. While I have a lot of experience with CA in small and medium-sized projects, I must say that it is a good fit and I have always been satisfied with it. However, it is important to emphasize the need for maintaining the structure, which involves following SOLID principles and patterns such as CQRS, Repository, DI, etc. By doing so, the project can be well-maintained.
+And lastly, the most important sentence at the end: **the architecture of a project depends on the project's needs.**
 
 ## Technologies
 * [ASP.NET Core 8](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-8.0)

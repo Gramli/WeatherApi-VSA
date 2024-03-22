@@ -15,7 +15,7 @@ Example API allows to get actual/forecast weather data by location from [Weather
 * [Comparsion of Vertical Slice Architecture and Clean Architecture](#comparsion-of-vertical-slice-architecture-and-clean-architecture)
    - [Pull Request of new CRUD endpoint](#pull-request-of-new-crud-endpoint)
    - [Unit Testing](#unit-testing)
-   - [Comparsion Conclusion](#comparsion-conclusion)
+   - [Final Thoughts](#final-thoughts)
 * [Hybrid Approaches](#hybrid-approaches)
 * [Conclusion](#conclusion)
 * [Technologies](#technologies)
@@ -68,7 +68,7 @@ Based on the PR comparison, we can also see that VSA is well-suited for tiny or 
 ### Unit Testing
 In CA, unit testing is easy thanks to the high level of abstractions. However, as the project grows, it can result in a lot of repetitive work. Fortunately, with the support of AI, this issue can be alleviated. In VSA, it depends. When we look at this example, everything is within the handler (business logic, access to the database). Therefore, for growing project, this is not a good approach because writing and maintaining unit tests can become increasingly difficult even for the AI. But for this simple example, it fits well.
 
-### Comparsion Conclusion
+### Final Thoughts
 In comparison, VSA resolves the issue of CA by touching all layers for just one feature. However, on the other hand, there is a risk of code duplication which CA reduces by splitting the code into layers and then into reusable services. Unit testing is easier and cleaner in CA, but it results in repetition. Unit testing in VSA could be difficult in cases when we put too much logic into one file. The solution for these issues can be to create a hybrid of both architectures.
 
 ## Hybrid Approaches

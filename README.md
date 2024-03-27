@@ -4,9 +4,9 @@
 [![.NET Build and Test](https://github.com/Gramli/WeatherApi-VSA/actions/workflows/dotnet.yml/badge.svg)](https://github.com/Gramli/WeatherApi-VSA/actions/workflows/dotnet.yml)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/748a25879e324dfca7232aae16c33eaa)](https://app.codacy.com/gh/Gramli/WeatherApi-VSA/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)  
 
-REST API solution demonstrates how to create API with Vertical Slice Architecture, minimal API and various of design patterns.  
+REST API solution demonstrates how to create an API using Vertical Slice Architecture, minimal API and various design patterns.  
 
-Example API allows to get actual/forecast weather data by location from [Weatherbit](https://www.weatherbit.io/) throught [RapidAPI](https://rapidapi.com) and also allow's to add/delete favorite locations into [in memory database](https://learn.microsoft.com/en-us/ef/core/providers/in-memory/?tabs=dotnet-core-cli) and then get weather data by stored (favorites) locations.
+The example API allows users to retrieve actual/forecast weather data by location from [Weatherbit](https://www.weatherbit.io/) throught [RapidAPI](https://rapidapi.com). Additionally, it allows users to add/delete favorite locations into an [in memory database](https://learn.microsoft.com/en-us/ef/core/providers/in-memory/?tabs=dotnet-core-cli) and then retrieve weather data by stored (favorite) locations.
 
 ## Menu
 * [Get Started](#get-started)
@@ -38,7 +38,7 @@ Example API allows to get actual/forecast weather data by location from [Weather
  * Send request
 
 ## Motivation
-Main motivation is to write practical example of simple API using Vertical Slice Architecture and then compare it to same API designed by Clean Architecture.
+The main motivation is to write a practical example of a simple API using Vertical Slice Architecture and then compare it to the same API designed by Clean Architecture.
 
 ## Architecture
 Project folows **[Vertical Slice Architecture](https://www.jimmybogard.com/vertical-slice-architecture/)** which instead of separation of technical concerns it encapsulating business logic of specific feature into vertical slice. So for example against [Clean Architecture](https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/common-web-application-architectures#clean-architecture), one vertical slice is cross section of all layers like in picture below.

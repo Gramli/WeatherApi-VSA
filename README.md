@@ -45,14 +45,15 @@ Project folows **[Vertical Slice Architecture](https://www.jimmybogard.com/verti
 
 ![Project Vertical Slice Architecture Diagram](./doc/img/chart.png)
 
-As this project is simple API, I decided to represent one vertical slice (or feature) as CRUD operation with some aditional business logic. Vertical slices should'nt reference each other so shared code is in Domain folder, for example WeatherService which is adapter to Weatherbit.Client project or DbContext is in Domain.
-Every feature(slice) folder contains a similiar structure:
+As this project involves a simple API, I decided to represent each vertical slice (or feature) as a CRUD operation with some additional business logic. Vertical slices shouldn't reference each other, so shared code is placed in the Domain folder. For example, the WeatherService, which acts as an adapter to the Weatherbit.Client project, or the DbContext, resides in the Domain. 
+
+Every feature (slice) folder contains a similar structure:
 * request query or command - holds request parameters/data
 * request handler - implementation of business logic
 * specification holder - validation rules
 * configuration - registering of classes into IoC container and minimal api endpoints.
 
-Some slices also contains Dto objects, mapper profiles etc.., just all specific to feature(slice).
+Some slices also contains Dto objects, mapper profiles etc.., just all specific to the feature(slice).
 
 ## Comparsion of Vertical Slice Architecture and Clean Architecture
 

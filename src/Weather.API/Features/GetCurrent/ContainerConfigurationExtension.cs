@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SmallApiToolkit.Core.Extensions;
+using SmallApiToolkit.Core.RequestHandlers;
+using SmallApiToolkit.Extensions;
 using Validot;
-using Weather.API.Domain.Abstractions;
 using Weather.API.Domain.Dtos;
 using Weather.API.Domain.Extensions;
-using WeatherApi.Domain.Http;
 
 namespace Weather.API.Features.Weather.GetCurrent
 {
@@ -12,9 +13,9 @@ namespace Weather.API.Features.Weather.GetCurrent
         public static IEndpointRouteBuilder BuildGetCurrentWeatherEndpoints(this IEndpointRouteBuilder endpointRouteBuilder)
         {
             endpointRouteBuilder.MapGet("v1/current",
-                async (double latitude, double longitude, [FromServices] IRequestHandler<CurrentWeatherDto, GetCurrentWeatherQuery> handler, CancellationToken cancellationToken) =>
+                async (double latitude, double longitude, [FromServices] IHttpRequestHandler<CurrentWeatherDto, GetCurrentWeatherQuery> handler, CancellationToken cancellationToken) =>
                     await handler.SendAsync(new GetCurrentWeatherQuery(latitude, longitude), cancellationToken))
-                        .Produces<DataResponse<CurrentWeatherDto>>()
+                        .ProducesDataResponse<CurrentWeatherDto>()
                         .WithName("GetCurrentWeather")
                         .WithTags("Getters");
             return endpointRouteBuilder;
@@ -22,7 +23,7 @@ namespace Weather.API.Features.Weather.GetCurrent
 
         public static IServiceCollection AddGetCurrentWeather(this IServiceCollection serviceCollection)
             => serviceCollection
-                .AddScoped<IRequestHandler<CurrentWeatherDto, GetCurrentWeatherQuery>, GetCurrentWeatherHandler>()
+                .AddScoped<IHttpRequestHandler<CurrentWeatherDto, GetCurrentWeatherQuery>, GetCurrentWeatherHandler>()
                 .AddValidotSingleton<IValidator<CurrentWeatherDto>, CurrentWeatherDtoSpecificationHolder, CurrentWeatherDto>()
                 .AddValidotSingleton<IValidator<GetCurrentWeatherQuery>, GetCurrentWeatherQuerySpecificationHolder, GetCurrentWeatherQuery>();
         

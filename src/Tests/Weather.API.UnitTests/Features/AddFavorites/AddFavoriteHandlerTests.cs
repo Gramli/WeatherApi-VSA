@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
+using SmallApiToolkit.Core.RequestHandlers;
 using System.Net;
 using Validot;
 using Weather.API.Domain.Abstractions;
@@ -22,7 +23,7 @@ namespace Weather.API.UnitTests.Features.AddFavorites
         private readonly Mock<IMapper> _mapperMock;
         private readonly Mock<DbSet<FavoriteLocationEntity>> _favoriteLocationEntityDbSetMock;
 
-        private readonly IRequestHandler<int, AddFavoriteCommand> _uut;
+        private readonly IHttpRequestHandler<int, AddFavoriteCommand> _uut;
         public AddFavoriteHandlerTests()
         {
             _favoriteLocationEntityDbSetMock = new();

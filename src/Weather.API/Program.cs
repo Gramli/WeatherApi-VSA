@@ -1,14 +1,15 @@
+using SmallApiToolkit.Extensions;
+using SmallApiToolkit.Middleware;
 using Weather.API.Configuration;
 using Weather.API.Features.AddFavorites;
 using Weather.API.Features.DeleteFavorites;
-using Weather.API.Features.Favorites.AddFavorites;
-using Weather.API.Features.Favorites.GetFavorites;
 using Weather.API.Features.GetFavorites;
 using Weather.API.Features.Weather.GetCurrent;
 using Weather.API.Features.Weather.GetForecast;
-using Weather.API.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.AddLogging(LogLevel.Debug);
 
 builder.Services.AddDomain(builder.Configuration);
 builder.Services
@@ -35,6 +36,7 @@ app.UseMiddleware<ExceptionMiddleware>();
 
 app
     .MapGroup("weather")
+    .MapVersionGroup(1)
     .BuildAddFavoriteWeatherEndpoints()
     .BuildGetFavoriteWeatherEndpoints()
     .BuildGetForecastWeatherEndpoints()

@@ -3,6 +3,8 @@ using FluentResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
+using SmallApiToolkit.Core.RequestHandlers;
+using SmallApiToolkit.Core.Response;
 using System.Net;
 using Validot;
 using Weather.API.Domain.Abstractions;
@@ -12,7 +14,6 @@ using Weather.API.Domain.Logging;
 using Weather.API.Features.Favorites.GetFavorites;
 using Weather.API.UnitTests.Domain.Database;
 using Weather.API.UnitTests.TestExtensions;
-using WeatherApi.Domain.Http;
 
 namespace Weather.API.UnitTests.Features.GetFavorites
 {
@@ -26,7 +27,7 @@ namespace Weather.API.UnitTests.Features.GetFavorites
         private readonly Mock<IMapper> _mapperMock;
         private readonly Mock<DbSet<FavoriteLocationEntity>> _favoriteLocationEntityDbSetMock;
 
-        private readonly IRequestHandler<FavoritesWeatherDto, EmptyRequest> _uut;
+        private readonly IHttpRequestHandler<FavoritesWeatherDto, EmptyRequest> _uut;
         public GetFavoritesHandlerTests()
         {
             _weatherServiceMock = new();

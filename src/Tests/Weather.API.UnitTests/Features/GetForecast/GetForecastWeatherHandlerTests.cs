@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using Microsoft.Extensions.Logging;
 using Moq;
+using SmallApiToolkit.Core.RequestHandlers;
 using System.Net;
 using Validot;
 using Validot.Results;
@@ -20,7 +21,7 @@ namespace Weather.API.UnitTests.Features.GetForecast
         private readonly Mock<IWeatherService> _weatherServiceMock;
         private readonly Mock<ILogger<GetForecastWeatherHandler>> _loggerMock;
 
-        private readonly IRequestHandler<ForecastWeatherDto, GetForecastWeatherQuery> _uut;
+        private readonly IHttpRequestHandler<ForecastWeatherDto, GetForecastWeatherQuery> _uut;
         public GetForecastWeatherHandlerTests()
         {
             _getForecastWeatherQueryValidatorMock = new Mock<IValidator<GetForecastWeatherQuery>>();

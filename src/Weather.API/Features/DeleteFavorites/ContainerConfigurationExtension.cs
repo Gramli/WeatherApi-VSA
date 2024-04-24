@@ -11,7 +11,7 @@ namespace Weather.API.Features.DeleteFavorites
     {
         public static IEndpointRouteBuilder BuildDeleteFavoriteWeatherEndpoints(this IEndpointRouteBuilder endpointRouteBuilder)
         {
-            endpointRouteBuilder.MapDelete("v1/favorite/{id}",
+            endpointRouteBuilder.MapDelete("favorite/{id}",
                 async (int id, [FromServices] IHttpRequestHandler<bool, DeleteFavoriteCommand> handler, CancellationToken cancellationToken) =>
                     await handler.SendAsync(new DeleteFavoriteCommand { Id = id }, cancellationToken))
                         .ProducesDataResponse<bool>()

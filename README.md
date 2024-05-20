@@ -105,6 +105,7 @@ And lastly, the most important sentence at the end: **the architecture of a proj
 ## Technologies
 * [ASP.NET Core 8](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-8.0)
 * [Entity Framework Core InMemory](https://learn.microsoft.com/en-us/ef/core/providers/in-memory/?tabs=dotnet-core-cli)
+* [SmallApiToolkit](https://github.com/Gramli/SmallApiToolkit)
 * [AutoMapper](https://github.com/AutoMapper/AutoMapper)
 * [FluentResuls](https://github.com/altmann/FluentResults)
 * [Validot](https://github.com/bartoszlenar/Validot)

@@ -1,15 +1,17 @@
 ﻿using Ardalis.GuardClauses;
+using SmallApiToolkit.Core.Extensions;
+using SmallApiToolkit.Core.RequestHandlers;
+using SmallApiToolkit.Core.Response;
 using Validot;
 using Weather.API.Domain.Abstractions;
 using Weather.API.Domain.Dtos;
 using Weather.API.Domain.Extensions;
 using Weather.API.Domain.Logging;
 using Weather.API.Domain.Resources;
-using WeatherApi.Domain.Http;
 
 namespace Weather.API.Features.Weather.GetCurrent
 {
-    internal sealed class GetCurrentWeatherHandler : IRequestHandler<CurrentWeatherDto, GetCurrentWeatherQuery>
+    internal sealed class GetCurrentWeatherHandler : IHttpRequestHandler<CurrentWeatherDto, GetCurrentWeatherQuery>
     {
         private readonly IValidator<GetCurrentWeatherQuery> _getCurrentWeatherQueryValidator;
         private readonly IValidator<CurrentWeatherDto> _currentWeatherValidator;

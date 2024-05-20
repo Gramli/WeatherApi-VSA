@@ -1,8 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SmallApiToolkit.Core.Extensions;
+using SmallApiToolkit.Core.RequestHandlers;
+using SmallApiToolkit.Extensions;
 using Validot;
-using Weather.API.Domain.Abstractions;
 using Weather.API.Domain.Extensions;
-using WeatherApi.Domain.Http;
 
 namespace Weather.API.Features.DeleteFavorites
 {
@@ -10,10 +11,10 @@ namespace Weather.API.Features.DeleteFavorites
     {
         public static IEndpointRouteBuilder BuildDeleteFavoriteWeatherEndpoints(this IEndpointRouteBuilder endpointRouteBuilder)
         {
-            endpointRouteBuilder.MapDelete("v1/favorite/{id}",
-                async (int id, [FromServices] IRequestHandler<bool, DeleteFavoriteCommand> handler, CancellationToken cancellationToken) =>
+            endpointRouteBuilder.MapDelete("favorite/{id}",
+                async (int id, [FromServices] IHttpRequestHandler<bool, DeleteFavoriteCommand> handler, CancellationToken cancellationToken) =>
                     await handler.SendAsync(new DeleteFavoriteCommand { Id = id }, cancellationToken))
-                        .Produces<DataResponse<bool>>()
+                        .ProducesDataResponse<bool>()
                         .WithName("DeleteFavorite")
                         .WithTags("Delete");
 
@@ -22,7 +23,7 @@ namespace Weather.API.Features.DeleteFavorites
 
         public static IServiceCollection AddDeleteFavorites(this IServiceCollection serviceCollection)
             => serviceCollection
-                .AddScoped<IRequestHandler<bool, DeleteFavoriteCommand>, DeleteFavoriteHandler>()
+                .AddScoped<IHttpRequestHandler<bool, DeleteFavoriteCommand>, DeleteFavoriteHandler>()
                 .AddValidotSingleton<IValidator<DeleteFavoriteCommand>, DeleteFavoriteCommandSpecificationHolder, DeleteFavoriteCommand>();
 
     }

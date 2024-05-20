@@ -2,6 +2,9 @@
 using AutoMapper;
 using FluentResults;
 using Microsoft.EntityFrameworkCore;
+using SmallApiToolkit.Core.Extensions;
+using SmallApiToolkit.Core.RequestHandlers;
+using SmallApiToolkit.Core.Response;
 using Validot;
 using Weather.API.Domain.Abstractions;
 using Weather.API.Domain.Database.EFContext;
@@ -11,11 +14,10 @@ using Weather.API.Domain.Extensions;
 using Weather.API.Domain.Logging;
 using Weather.API.Domain.Resources;
 using Weather.API.Features.GetFavorites;
-using WeatherApi.Domain.Http;
 
 namespace Weather.API.Features.Favorites.GetFavorites
 {
-    internal sealed class GetFavoritesHandler : IRequestHandler<FavoritesWeatherDto, EmptyRequest>
+    internal sealed class GetFavoritesHandler : IHttpRequestHandler<FavoritesWeatherDto, EmptyRequest>
     {
         private readonly IValidator<LocationDto> _locationValidator;
         private readonly IValidator<CurrentWeatherDto> _currentWeatherValidator;

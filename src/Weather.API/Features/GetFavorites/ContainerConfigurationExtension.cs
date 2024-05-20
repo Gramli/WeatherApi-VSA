@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Weather.API.Domain.Abstractions;
-using Weather.API.Domain.Extensions;
-using Weather.API.Features.AddFavorites;
+using SmallApiToolkit.Core.Extensions;
+using SmallApiToolkit.Core.RequestHandlers;
+using SmallApiToolkit.Core.Response;
+using SmallApiToolkit.Extensions;
 using Weather.API.Features.Favorites.GetFavorites;
-using Weather.API.Features.GetFavorites;
-using WeatherApi.Domain.Http;
 
 namespace Weather.API.Features.GetFavorites
 {
@@ -12,10 +11,10 @@ namespace Weather.API.Features.GetFavorites
     {
         public static IEndpointRouteBuilder BuildGetFavoriteWeatherEndpoints(this IEndpointRouteBuilder endpointRouteBuilder)
         {
-            endpointRouteBuilder.MapGet("v1/favorites",
-                async ([FromServices] IRequestHandler<FavoritesWeatherDto, EmptyRequest> handler, CancellationToken cancellationToken) =>
+            endpointRouteBuilder.MapGet("favorites",
+                async ([FromServices] IHttpRequestHandler<FavoritesWeatherDto, EmptyRequest> handler, CancellationToken cancellationToken) =>
                     await handler.SendAsync(EmptyRequest.Instance, cancellationToken))
-                        .Produces<DataResponse<FavoritesWeatherDto>>()
+                        .ProducesDataResponse<FavoritesWeatherDto>()
                         .WithName("GetFavorites")
                         .WithTags("Getters");
 
@@ -24,6 +23,6 @@ namespace Weather.API.Features.GetFavorites
 
         public static IServiceCollection AddGetFavorites(this IServiceCollection serviceCollection) 
             => serviceCollection
-                .AddScoped<IRequestHandler<FavoritesWeatherDto, EmptyRequest>, GetFavoritesHandler>();
+                .AddScoped<IHttpRequestHandler<FavoritesWeatherDto, EmptyRequest>, GetFavoritesHandler>();
     }
 }

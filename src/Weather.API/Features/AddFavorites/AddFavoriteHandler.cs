@@ -2,18 +2,18 @@
 using AutoMapper;
 using FluentResults;
 using Microsoft.EntityFrameworkCore;
+using SmallApiToolkit.Core.Extensions;
+using SmallApiToolkit.Core.RequestHandlers;
+using SmallApiToolkit.Core.Response;
 using Validot;
-using Weather.API.Domain.Abstractions;
 using Weather.API.Domain.Database.EFContext;
 using Weather.API.Domain.Database.Entities;
-using Weather.API.Domain.Extensions;
 using Weather.API.Domain.Logging;
 using Weather.API.Domain.Resources;
-using WeatherApi.Domain.Http;
 
 namespace Weather.API.Features.Favorites.AddFavorites
 {
-    internal sealed class AddFavoriteHandler : IRequestHandler<int, AddFavoriteCommand>
+    internal sealed class AddFavoriteHandler : IHttpRequestHandler<int, AddFavoriteCommand>
     {
         private readonly IMapper _mapper;
         private readonly WeatherContext _weatherContext;

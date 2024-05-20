@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
+using SmallApiToolkit.Core.RequestHandlers;
 using System.Net;
 using Validot;
 using Weather.API.Domain.Abstractions;
@@ -17,7 +18,7 @@ namespace Weather.API.UnitTests.Features.DeleteFavorites
         private readonly Mock<TestWeatherContext> _weatherContextMock;
         private readonly Mock<DbSet<FavoriteLocationEntity>> _favoriteLocationEntityDbSetMock;
 
-        private readonly IRequestHandler<bool, DeleteFavoriteCommand> _uut;
+        private readonly IHttpRequestHandler<bool, DeleteFavoriteCommand> _uut;
         public DeleteFavoriteHandlerTests()
         {
             _deleteFavoriteCommandValidatorMock = new();

@@ -27,7 +27,7 @@ To install the project using Git Bash:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/Gramli/FileApi.git
+   git clone https://github.com/Gramli/WeatherApi-VSA.git
    ```
 2. Navigate to the project directory:
    ```bash

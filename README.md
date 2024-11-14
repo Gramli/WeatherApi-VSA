@@ -19,7 +19,7 @@ The example API allows users to retrieve actual/forecast weather data by locatio
   - [Technologies](#technologies)
 
 ## Prerequisites
-* **.NET SDK 8.0+**
+* **.NET SDK 9.0.x**
 
 ## Installation
 
@@ -31,7 +31,7 @@ To install the project using Git Bash:
    ```
 2. Navigate to the project directory:
    ```bash
-   cd FileApi/src
+   cd WeatherApi-VSA/src
    ```
 3. Install the backend dependencies:
    ```bash
@@ -77,7 +77,7 @@ Some slices also contains Dto objects, mapper profiles etc.., just all specific 
 I wrote a short blog post comparing Clean Architecture and Vertical Slice Architecture. The comparison is based on real pull requests, and the post also explores a hypothesis about a hybrid approach. [Link to post](https://gramli.github.io//posts/architecture/clean-arch-vs-vertical-slice-arch)
 
 ## Technologies
-* [ASP.NET Core 8](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-8.0)
+* [ASP.NET Core 9](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-9.0)
 * [Entity Framework Core InMemory](https://learn.microsoft.com/en-us/ef/core/providers/in-memory/?tabs=dotnet-core-cli)
 * [SmallApiToolkit](https://github.com/Gramli/SmallApiToolkit)
 * [AutoMapper](https://github.com/AutoMapper/AutoMapper)

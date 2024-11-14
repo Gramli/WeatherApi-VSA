@@ -9,7 +9,7 @@ using Weather.API.Features.Weather.GetForecast;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.AddLogging(LogLevel.Debug);
+builder.AddLogging();
 
 builder.Services.AddDomain(builder.Configuration);
 builder.Services

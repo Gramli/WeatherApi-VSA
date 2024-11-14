@@ -45,13 +45,6 @@ namespace Weather.API.Configuration
                 .AddValidotSingleton<IValidator<LocationDto>, LocationDtoSpecificationHolder, LocationDto>();
         }
 
-        public static WebApplicationBuilder AddLogging(this WebApplicationBuilder builder)
-        {
-            builder.Logging.ClearProviders();
-            builder.Logging.AddConsole();
-            return builder;
-        }
-
         private static IServiceCollection AddMapping(this IServiceCollection serviceCollection)
         {
             return serviceCollection

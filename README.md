@@ -86,3 +86,4 @@ I wrote a short blog post comparing Clean Architecture and Vertical Slice Archit
 * [GuardClauses](https://github.com/ardalis/GuardClauses)
 * [Moq](https://github.com/moq/moq4)
 * [Xunit](https://github.com/xunit/xunit)
+* [Scalar](https://scalar.com)

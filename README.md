@@ -51,6 +51,9 @@ To install the project using Git Bash:
 ```
 4. Run Weather.API 
 
+### Try it using Scalar
+After Weather.API is started, the browser is launched by default at the `scalar/v1` URL, so you can test it using [Scalar UI](https://scalar.com).
+
 ### Try it using .http file (VS2022)
  * Go to Tests/Debug folder and open **debug-tests.http** file (in VS2022)
  * Send request

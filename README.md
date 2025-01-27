@@ -51,6 +51,9 @@ To install the project using Git Bash:
 ```
 4. Run Weather.API 
 
+### Try it using Scalar
+After Weather.API is started, the browser is launched by default at the `scalar/v1` URL, so you can test it using [Scalar UI](https://scalar.com).
+
 ### Try it using .http file (VS2022)
  * Go to Tests/Debug folder and open **debug-tests.http** file (in VS2022)
  * Send request
@@ -77,12 +80,13 @@ Some slices also contains Dto objects, mapper profiles etc.., just all specific 
 I wrote a short blog post comparing Clean Architecture and Vertical Slice Architecture. The comparison is based on real pull requests, and the post also explores a hypothesis about a hybrid approach. [Link to post](https://gramli.github.io//posts/architecture/clean-arch-vs-vertical-slice-arch)
 
 ## Technologies
-* [ASP.NET Core 9](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-9.0)
-* [Entity Framework Core InMemory](https://learn.microsoft.com/en-us/ef/core/providers/in-memory/?tabs=dotnet-core-cli)
-* [SmallApiToolkit](https://github.com/Gramli/SmallApiToolkit)
-* [AutoMapper](https://github.com/AutoMapper/AutoMapper)
-* [FluentResuls](https://github.com/altmann/FluentResults)
-* [Validot](https://github.com/bartoszlenar/Validot)
-* [GuardClauses](https://github.com/ardalis/GuardClauses)
-* [Moq](https://github.com/moq/moq4)
-* [Xunit](https://github.com/xunit/xunit)
+- [ASP.NET Core 9](https://learn.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core?view=aspnetcore-9.0)
+- [Entity Framework Core InMemory](https://learn.microsoft.com/en-us/ef/core/providers/in-memory/?tabs=dotnet-core-cli)
+- [SmallApiToolkit](https://github.com/Gramli/SmallApiToolkit)
+- [AutoMapper](https://github.com/AutoMapper/AutoMapper)
+- [FluentResuls](https://github.com/altmann/FluentResults)
+- [Validot](https://github.com/bartoszlenar/Validot)
+- [GuardClauses](https://github.com/ardalis/GuardClauses)
+- [Moq](https://github.com/moq/moq4)
+- [Xunit](https://github.com/xunit/xunit)
+- [Scalar](https://scalar.com)

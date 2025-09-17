@@ -11,7 +11,7 @@ namespace Weather.API.Features.GetFavorites
     {
         public static IEndpointRouteBuilder BuildGetFavoriteWeatherEndpoints(this IEndpointRouteBuilder endpointRouteBuilder)
         {
-            endpointRouteBuilder.MapGet("favorites",
+            endpointRouteBuilder.MapGet("/favorites",
                 async ([FromServices] IHttpRequestHandler<FavoritesWeatherDto, EmptyRequest> handler, CancellationToken cancellationToken) =>
                     await handler.SendAsync(EmptyRequest.Instance, cancellationToken))
                         .ProducesDataResponse<FavoritesWeatherDto>()

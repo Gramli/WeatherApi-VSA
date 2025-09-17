@@ -12,7 +12,7 @@ namespace Weather.API.Features.AddFavorites
     {
         public static IEndpointRouteBuilder BuildAddFavoriteWeatherEndpoints(this IEndpointRouteBuilder endpointRouteBuilder)
         {
-            endpointRouteBuilder.MapPost("favorite",
+            endpointRouteBuilder.MapPost("/favorites",
                 async ([FromBody] AddFavoriteCommand addFavoriteCommand, [FromServices] IHttpRequestHandler<int, AddFavoriteCommand> handler, CancellationToken cancellationToken) =>
                     await handler.SendAsync(addFavoriteCommand, cancellationToken))
                         .ProducesDataResponse<int>()

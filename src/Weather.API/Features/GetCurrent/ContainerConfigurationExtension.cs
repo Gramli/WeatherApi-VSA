@@ -12,7 +12,7 @@ namespace Weather.API.Features.Weather.GetCurrent
     {
         public static IEndpointRouteBuilder BuildGetCurrentWeatherEndpoints(this IEndpointRouteBuilder endpointRouteBuilder)
         {
-            endpointRouteBuilder.MapGet("current",
+            endpointRouteBuilder.MapGet("/current",
                 async (double latitude, double longitude, [FromServices] IHttpRequestHandler<CurrentWeatherDto, GetCurrentWeatherQuery> handler, CancellationToken cancellationToken) =>
                     await handler.SendAsync(new GetCurrentWeatherQuery(latitude, longitude), cancellationToken))
                         .ProducesDataResponse<CurrentWeatherDto>()

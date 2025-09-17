@@ -11,7 +11,7 @@ namespace Weather.API.Features.Weather.GetForecast
     {
         public static IEndpointRouteBuilder BuildGetForecastWeatherEndpoints(this IEndpointRouteBuilder endpointRouteBuilder)
         {
-            endpointRouteBuilder.MapGet("forecast",
+            endpointRouteBuilder.MapGet("/forecast",
                 async (double latitude, double longitude, [FromServices] IHttpRequestHandler<ForecastWeatherDto, GetForecastWeatherQuery> handler, CancellationToken cancellationToken) =>
                     await handler.SendAsync(new GetForecastWeatherQuery(latitude, longitude), cancellationToken))
                         .ProducesDataResponse<ForecastWeatherDto>()

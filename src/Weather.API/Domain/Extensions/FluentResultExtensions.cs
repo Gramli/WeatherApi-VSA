@@ -4,7 +4,7 @@ namespace Weather.API.Domain.Extensions
 {
     public static class FluentResultExtensions
     {
-        public static IEnumerable<string> ToErrorMessages(this IList<IError> errors)
+        public static IEnumerable<string> ToErrorMessages(this IReadOnlyList<IError> errors)
         {
             if (!errors.HasAny())
             {
@@ -14,7 +14,7 @@ namespace Weather.API.Domain.Extensions
             return errors.Select(error => error.Message);
         }
 
-        public static string JoinToMessage(this IList<IError> errors)
+        public static string JoinToMessage(this IReadOnlyList<IError> errors)
         {
             if (!errors.HasAny())
             {

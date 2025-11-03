@@ -1,5 +1,4 @@
 ﻿using Ardalis.GuardClauses;
-using AutoMapper;
 using FluentResults;
 using Weather.API.Domain.Abstractions;
 using Weather.API.Domain.Dtos;
@@ -13,12 +12,10 @@ namespace Weather.API.Domain.Service
     internal sealed class WeatherService : IWeatherService
     {
         private readonly IWeatherbitHttpClient _weatherbitHttpClient;
-        private readonly IMapper _mapper;
 
-        public WeatherService(IWeatherbitHttpClient weatherbitHttpClient, IMapper mapper)
+        public WeatherService(IWeatherbitHttpClient weatherbitHttpClient)
         {
             _weatherbitHttpClient = Guard.Against.Null(weatherbitHttpClient);
-            _mapper = Guard.Against.Null(mapper);
         }
 
         public async Task<Result<CurrentWeatherDto>> GetCurrentWeather(LocationDto locationDto, CancellationToken cancellationToken)
@@ -39,7 +36,19 @@ namespace Weather.API.Domain.Service
                 return Result.Fail(string.Format(ServiceErrorMessages.ExternalClientGetDataFailed_CorruptedData_InvalidCount, currentWeatherResult.Value.Data.Count));
             }
 
-            return _mapper.Map<CurrentWeatherDto>(currentWeatherResult.Value.Data.Single());
+            var item = currentWeatherResult.Value.Data.Single();
+
+            return Result.Ok(
+            
+                new CurrentWeatherDto
+                {
+                    CityName = item.city_name,
+                    DateTime = item.ob_time,
+                    Temperature = item.temp,
+                    Sunrise = item.sunrise,
+                    Sunset = item.sunset,
+                }
+            );
         }
 
         public async Task<Result<ForecastWeatherDto>> GetForecastWeather(LocationDto locationDto, CancellationToken cancellationToken)
@@ -55,7 +64,15 @@ namespace Weather.API.Domain.Service
                 return Result.Fail(ServiceErrorMessages.ExternalClientGetDataFailed_EmptyOrNull);
             }
 
-            return _mapper.Map<ForecastWeatherDto>(forecastWeatherResult.Value);
+            return Result.Ok(new ForecastWeatherDto
+            {
+                CityName = forecastWeatherResult.Value.city_name,
+                ForecastTemperatures = forecastWeatherResult.Value.Data.Select(item => new ForecastTemperatureDto
+                {
+                    DateTime = item.datetime,
+                    Temperature = item.temp,
+                }).ToList()
+            });
         }
     }
 }

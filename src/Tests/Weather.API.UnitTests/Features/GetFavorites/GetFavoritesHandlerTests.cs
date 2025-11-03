@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using FluentResults;
+﻿using FluentResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -24,7 +23,6 @@ namespace Weather.API.UnitTests.Features.GetFavorites
         private readonly Mock<IValidator<LocationDto>> _locationValidatorMock;
         private readonly Mock<IValidator<CurrentWeatherDto>> _currentWeatherValidatorMock;
         private readonly Mock<TestWeatherContext> _weatherContextMock;
-        private readonly Mock<IMapper> _mapperMock;
         private readonly Mock<DbSet<FavoriteLocationEntity>> _favoriteLocationEntityDbSetMock;
 
         private readonly IHttpRequestHandler<FavoritesWeatherDto, EmptyRequest> _uut;
@@ -35,7 +33,6 @@ namespace Weather.API.UnitTests.Features.GetFavorites
             _locationValidatorMock = new();
             _currentWeatherValidatorMock = new();
             _weatherContextMock = new();
-            _mapperMock = new();
             _favoriteLocationEntityDbSetMock = new();
 
             _uut = new GetFavoritesHandler(
@@ -43,8 +40,7 @@ namespace Weather.API.UnitTests.Features.GetFavorites
                 _locationValidatorMock.Object,
                 _currentWeatherValidatorMock.Object,
                 _loggerMock.Object,
-                _weatherContextMock.Object,
-                _mapperMock.Object);
+                _weatherContextMock.Object);
         }
 
         [Fact]
@@ -70,7 +66,6 @@ namespace Weather.API.UnitTests.Features.GetFavorites
             var favoriteLocations = new List<FavoriteLocationEntity>(){ new() };
             _favoriteLocationEntityDbSetMock.SetupMock(favoriteLocations);
             _weatherContextMock.Setup(x => x.FavoriteLocations).Returns(_favoriteLocationEntityDbSetMock.Object);
-            _mapperMock.Setup(x => x.Map<List<LocationDto>>(favoriteLocations)).Returns(new List<LocationDto> { new LocationDto() });
             _locationValidatorMock.Setup(x => x.IsValid(It.IsAny<LocationDto>())).Returns(false);
 
             //Act
@@ -94,7 +89,6 @@ namespace Weather.API.UnitTests.Features.GetFavorites
             var favoriteLocations = new List<FavoriteLocationEntity>() { new() };
             _favoriteLocationEntityDbSetMock.SetupMock(favoriteLocations);
             _weatherContextMock.Setup(x => x.FavoriteLocations).Returns(_favoriteLocationEntityDbSetMock.Object);
-            _mapperMock.Setup(x => x.Map<LocationDto>(It.IsAny<FavoriteLocationEntity>())).Returns(locationDto);
             _locationValidatorMock.Setup(x => x.IsValid(It.IsAny<LocationDto>())).Returns(true);
             _weatherServiceMock.Setup(x => x.GetCurrentWeather(It.IsAny<LocationDto>(), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Fail(failMessage));
 
@@ -104,9 +98,9 @@ namespace Weather.API.UnitTests.Features.GetFavorites
             //Assert
             Assert.Equal(HttpStatusCode.InternalServerError, result.StatusCode);
             Assert.Single(result.Errors);
-            _weatherServiceMock.Verify(x => x.GetCurrentWeather(It.Is<LocationDto>(y => y.Equals(locationDto)), It.IsAny<CancellationToken>()), Times.Once);
+            _weatherServiceMock.Verify(x => x.GetCurrentWeather(It.IsAny<LocationDto>(), It.IsAny<CancellationToken>()), Times.Once);
             _loggerMock.VerifyLog(LogLevel.Warning, LogEvents.FavoriteWeathersGeneral, failMessage, Times.Once());
-            _locationValidatorMock.Verify(x => x.IsValid(It.Is<LocationDto>(y => y.Equals(locationDto))), Times.Once);
+            _locationValidatorMock.Verify(x => x.IsValid(It.IsAny<LocationDto>()), Times.Once);
         }
 
         [Fact]
@@ -119,16 +113,16 @@ namespace Weather.API.UnitTests.Features.GetFavorites
             var favoriteLocations = new List<FavoriteLocationEntity> { new(), new FavoriteLocationEntity { Latitude = locationDto.Latitude, Longitude = locationDto.Longitude } };
             _favoriteLocationEntityDbSetMock.SetupMock(favoriteLocations);
             _weatherContextMock.Setup(x => x.FavoriteLocations).Returns(_favoriteLocationEntityDbSetMock.Object);
-            _mapperMock.Setup(x => x.Map<LocationDto>(It.Is<FavoriteLocationEntity>(y=> y.Latitude!= locationDto.Latitude))).Returns(new LocationDto());
-            _mapperMock.Setup(x => x.Map<LocationDto>(It.Is<FavoriteLocationEntity>(y => y.Latitude == locationDto.Latitude))).Returns(locationDto);
             _locationValidatorMock.Setup(x => x.IsValid(It.IsAny<LocationDto>())).Returns(true);
 
             var currentWeather = new CurrentWeatherDto();
 
             _currentWeatherValidatorMock.Setup(x => x.IsValid(It.IsAny<CurrentWeatherDto>())).Returns(true);
 
-            _weatherServiceMock.Setup(x => x.GetCurrentWeather(It.Is<LocationDto>(y => y.Equals(locationDto)), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Fail(failMessage));
-            _weatherServiceMock.Setup(x => x.GetCurrentWeather(It.Is<LocationDto>(y => !y.Equals(locationDto)), It.IsAny<CancellationToken>())).ReturnsAsync(Result.Ok(currentWeather));
+            _weatherServiceMock.Setup(x => x.GetCurrentWeather(It.Is<LocationDto>(y => y.Latitude.Equals(locationDto.Latitude) && y.Longitude.Equals(locationDto.Longitude)), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Result.Fail(failMessage));
+            _weatherServiceMock.Setup(x => x.GetCurrentWeather(It.Is<LocationDto>(y=>y.Longitude.Equals(0)), It.IsAny<CancellationToken>()))
+                .ReturnsAsync(Result.Ok(currentWeather));
             //Act
             var result = await _uut.HandleAsync(EmptyRequest.Instance, CancellationToken.None);
 
@@ -139,7 +133,7 @@ namespace Weather.API.UnitTests.Features.GetFavorites
             Assert.Single(result.Data.FavoriteWeathers);
             _weatherServiceMock.Verify(x => x.GetCurrentWeather(It.IsAny<LocationDto>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
             _loggerMock.VerifyLog(LogLevel.Warning, LogEvents.FavoriteWeathersGeneral, failMessage, Times.Once());
-            _locationValidatorMock.Verify(x => x.IsValid(It.Is<LocationDto>(y => y.Equals(locationDto))), Times.Once);
+            _locationValidatorMock.Verify(x => x.IsValid(It.IsAny<LocationDto>()), Times.Exactly(2));
             _currentWeatherValidatorMock.Verify(x => x.IsValid(It.Is<CurrentWeatherDto>(y => y.Equals(currentWeather))), Times.Once);
         }
 
@@ -152,7 +146,6 @@ namespace Weather.API.UnitTests.Features.GetFavorites
             var favoriteLocations = new List<FavoriteLocationEntity>() { new() };
             _favoriteLocationEntityDbSetMock.SetupMock(favoriteLocations);
             _weatherContextMock.Setup(x => x.FavoriteLocations).Returns(_favoriteLocationEntityDbSetMock.Object);
-            _mapperMock.Setup(x => x.Map<LocationDto>(It.IsAny<FavoriteLocationEntity>())).Returns(locationDto);
 
             _locationValidatorMock.Setup(x => x.IsValid(It.IsAny<LocationDto>())).Returns(true);
             _currentWeatherValidatorMock.Setup(x => x.IsValid(It.IsAny<CurrentWeatherDto>())).Returns(false);
@@ -166,8 +159,8 @@ namespace Weather.API.UnitTests.Features.GetFavorites
             Assert.Equal(HttpStatusCode.InternalServerError, result.StatusCode);
             Assert.Single(result.Errors);
             Assert.Null(result.Data);
-            _weatherServiceMock.Verify(x => x.GetCurrentWeather(It.Is<LocationDto>(y => y.Equals(locationDto)), It.IsAny<CancellationToken>()), Times.Once);
-            _locationValidatorMock.Verify(x => x.IsValid(It.Is<LocationDto>(y => y.Equals(locationDto))), Times.Once);
+            _weatherServiceMock.Verify(x => x.GetCurrentWeather(It.IsAny<LocationDto>(), It.IsAny<CancellationToken>()), Times.Once);
+            _locationValidatorMock.Verify(x => x.IsValid(It.IsAny<LocationDto>()), Times.Once);
             _currentWeatherValidatorMock.Verify(x => x.IsValid(It.Is<CurrentWeatherDto>(y => y.Equals(currentWeather))), Times.Once);
         }
 
@@ -180,7 +173,6 @@ namespace Weather.API.UnitTests.Features.GetFavorites
             var favoriteLocations = new List<FavoriteLocationEntity>() { new() };
             _favoriteLocationEntityDbSetMock.SetupMock(favoriteLocations);
             _weatherContextMock.Setup(x => x.FavoriteLocations).Returns(_favoriteLocationEntityDbSetMock.Object);
-            _mapperMock.Setup(x => x.Map<LocationDto>(It.IsAny<FavoriteLocationEntity>())).Returns(locationDto);
 
             _locationValidatorMock.Setup(x => x.IsValid(It.IsAny<LocationDto>())).Returns(true);
             _currentWeatherValidatorMock.Setup(x => x.IsValid(It.IsAny<CurrentWeatherDto>())).Returns(true);
@@ -195,8 +187,8 @@ namespace Weather.API.UnitTests.Features.GetFavorites
             Assert.Empty(result.Errors);
             Assert.NotNull(result.Data);
             Assert.Single(result.Data.FavoriteWeathers);
-            _weatherServiceMock.Verify(x => x.GetCurrentWeather(It.Is<LocationDto>(y => y.Equals(locationDto)), It.IsAny<CancellationToken>()), Times.Once);
-            _locationValidatorMock.Verify(x => x.IsValid(It.Is<LocationDto>(y => y.Equals(locationDto))), Times.Once);
+            _weatherServiceMock.Verify(x => x.GetCurrentWeather(It.IsAny<LocationDto>(), It.IsAny<CancellationToken>()), Times.Once);
+            _locationValidatorMock.Verify(x => x.IsValid(It.IsAny<LocationDto>()), Times.Once);
             _currentWeatherValidatorMock.Verify(x => x.IsValid(It.Is<CurrentWeatherDto>(y => y.Equals(currentWeather))), Times.Once);
         }
     }

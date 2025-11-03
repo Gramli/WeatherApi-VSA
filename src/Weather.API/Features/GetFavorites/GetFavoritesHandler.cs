@@ -1,5 +1,4 @@
 ﻿using Ardalis.GuardClauses;
-using AutoMapper;
 using FluentResults;
 using Microsoft.EntityFrameworkCore;
 using SmallApiToolkit.Core.Extensions;
@@ -23,7 +22,6 @@ namespace Weather.API.Features.Favorites.GetFavorites
         private readonly IValidator<CurrentWeatherDto> _currentWeatherValidator;
         private readonly IWeatherService _weatherService;
         private readonly ILogger<GetFavoritesHandler> _logger;
-        private readonly IMapper _mapper;
         private readonly WeatherContext _weatherContext;
 
         public GetFavoritesHandler(
@@ -31,15 +29,13 @@ namespace Weather.API.Features.Favorites.GetFavorites
             IValidator<LocationDto> locationValidator,
             IValidator<CurrentWeatherDto> currentWeatherValidator,
             ILogger<GetFavoritesHandler> logger,
-            WeatherContext weatherContext,
-            IMapper mapper)
+            WeatherContext weatherContext)
         {
             _locationValidator = Guard.Against.Null(locationValidator);
             _currentWeatherValidator = Guard.Against.Null(currentWeatherValidator);
             _weatherService = Guard.Against.Null(weatherService);
             _logger = Guard.Against.Null(logger);
             _weatherContext = Guard.Against.Null(weatherContext);
-            _mapper = Guard.Against.Null(mapper);
         }
 
         public async Task<HttpDataResponse<FavoritesWeatherDto>> HandleAsync(EmptyRequest request, CancellationToken cancellationToken)
@@ -62,7 +58,11 @@ namespace Weather.API.Features.Favorites.GetFavorites
 
             await favoriteLocationsResult.ForEachAsync(async (location) =>
             {
-                var favoriteWeather = await GetWeatherAsync(_mapper.Map<LocationDto>(location), cancellationToken);
+                var favoriteWeather = await GetWeatherAsync(new LocationDto 
+                {
+                    Latitude = location.Latitude,
+                    Longitude = location.Longitude
+                }, cancellationToken);
 
                 if (favoriteWeather.IsFailed)
                 {
@@ -113,7 +113,11 @@ namespace Weather.API.Features.Favorites.GetFavorites
         public async Task<IEnumerable<LocationDto>> GetFavoritesAync(CancellationToken cancellationToken)
         {
             var favoriteLocationEntities = await _weatherContext.FavoriteLocations.ToListAsync(cancellationToken);
-            return _mapper.Map<List<LocationDto>>(favoriteLocationEntities);
+            return favoriteLocationEntities.Select(favoriteLocationEntities => new LocationDto
+            {
+                Latitude = favoriteLocationEntities.Latitude,
+                Longitude = favoriteLocationEntities.Longitude,
+            });
         }
     }
 }

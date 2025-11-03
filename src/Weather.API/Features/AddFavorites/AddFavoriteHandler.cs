@@ -1,5 +1,4 @@
 ﻿using Ardalis.GuardClauses;
-using AutoMapper;
 using FluentResults;
 using Microsoft.EntityFrameworkCore;
 using SmallApiToolkit.Core.Extensions;
@@ -15,20 +14,17 @@ namespace Weather.API.Features.Favorites.AddFavorites
 {
     internal sealed class AddFavoriteHandler : IHttpRequestHandler<int, AddFavoriteCommand>
     {
-        private readonly IMapper _mapper;
         private readonly WeatherContext _weatherContext;
         private readonly IValidator<AddFavoriteCommand> _addFavoriteCommandValidator;
         private readonly ILogger<AddFavoriteHandler> _logger;
         public AddFavoriteHandler(
             IValidator<AddFavoriteCommand> addFavoriteCommandValidator, 
             ILogger<AddFavoriteHandler> logger,
-            WeatherContext weatherContext, 
-            IMapper mapper)
+            WeatherContext weatherContext)
         {
             _addFavoriteCommandValidator = Guard.Against.Null(addFavoriteCommandValidator);
             _logger = Guard.Against.Null(logger);
             _weatherContext = Guard.Against.Null(weatherContext);
-            _mapper = Guard.Against.Null(mapper);
         }
 
         public async Task<HttpDataResponse<int>> HandleAsync(AddFavoriteCommand request, CancellationToken cancellationToken)
@@ -49,7 +45,11 @@ namespace Weather.API.Features.Favorites.AddFavorites
 
         public async Task<Result<int>> AddFavoriteLocationSafeAsync(AddFavoriteCommand addFavoriteCommand, CancellationToken cancellationToken)
         {
-            var locationEntity = _mapper.Map<FavoriteLocationEntity>(addFavoriteCommand.Location);
+            var locationEntity = new FavoriteLocationEntity
+            {
+                Latitude = addFavoriteCommand.Location.Latitude,
+                Longitude = addFavoriteCommand.Location.Longitude,
+            };
             try
             {
                 await _weatherContext.FavoriteLocations.AddAsync(locationEntity);

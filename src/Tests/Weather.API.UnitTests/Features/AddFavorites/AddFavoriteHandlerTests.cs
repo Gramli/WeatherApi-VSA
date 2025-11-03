@@ -1,11 +1,9 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using SmallApiToolkit.Core.RequestHandlers;
 using System.Net;
 using Validot;
-using Weather.API.Domain.Abstractions;
 using Weather.API.Domain.Database.Entities;
 using Weather.API.Domain.Dtos;
 using Weather.API.Domain.Logging;
@@ -20,7 +18,6 @@ namespace Weather.API.UnitTests.Features.AddFavorites
         private readonly Mock<TestWeatherContext> _weatherContextMock;
         private readonly Mock<IValidator<AddFavoriteCommand>> _addFavoriteCommandValidatorMock;
         private readonly Mock<ILogger<AddFavoriteHandler>> _loggerMock;
-        private readonly Mock<IMapper> _mapperMock;
         private readonly Mock<DbSet<FavoriteLocationEntity>> _favoriteLocationEntityDbSetMock;
 
         private readonly IHttpRequestHandler<int, AddFavoriteCommand> _uut;
@@ -32,9 +29,8 @@ namespace Weather.API.UnitTests.Features.AddFavorites
 
             _addFavoriteCommandValidatorMock = new();
             _loggerMock = new();
-            _mapperMock = new();
 
-            _uut = new AddFavoriteHandler(_addFavoriteCommandValidatorMock.Object, _loggerMock.Object, _weatherContextMock.Object, _mapperMock.Object);
+            _uut = new AddFavoriteHandler(_addFavoriteCommandValidatorMock.Object, _loggerMock.Object, _weatherContextMock.Object);
         }
 
 
@@ -62,7 +58,6 @@ namespace Weather.API.UnitTests.Features.AddFavorites
             var addFavoriteCommand = new AddFavoriteCommand { Location = new LocationDto { Latitude = 1, Longitude = 1 } };
 
             var favoriteLocationEntity = new FavoriteLocationEntity();
-            _mapperMock.Setup(x => x.Map<FavoriteLocationEntity>(It.IsAny<LocationDto>())).Returns(favoriteLocationEntity);
             _favoriteLocationEntityDbSetMock.Setup(x => x.AddAsync(It.IsAny<FavoriteLocationEntity>(), It.IsAny<CancellationToken>())).Throws(new DbUpdateException());
             _addFavoriteCommandValidatorMock.Setup(x => x.IsValid(It.IsAny<AddFavoriteCommand>())).Returns(true);
 
@@ -83,7 +78,6 @@ namespace Weather.API.UnitTests.Features.AddFavorites
             var addFavoriteCommand = new AddFavoriteCommand { Location = new LocationDto { Latitude = 1, Longitude = 1 } };
             var addFavoriteEntity = new FavoriteLocationEntity { Latitude = 1, Longitude = 2 };
 
-            _mapperMock.Setup(x => x.Map<FavoriteLocationEntity>(addFavoriteCommand.Location)).Returns(addFavoriteEntity);
             _addFavoriteCommandValidatorMock.Setup(x => x.IsValid(It.IsAny<AddFavoriteCommand>())).Returns(true);
             _favoriteLocationEntityDbSetMock.Setup(x => x.AddAsync(It.IsAny<FavoriteLocationEntity>(), It.IsAny<CancellationToken>()))
                 .Callback(()=> { addFavoriteEntity.Id = 1; });

@@ -8,23 +8,22 @@ using Weather.API.Features.DeleteFavorites;
 using Weather.API.Features.GetFavorites;
 using Weather.API.Features.Weather.GetCurrent;
 using Weather.API.Features.Weather.GetForecast;
+using Wheaterbit.Client.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
-if (builder.Environment.IsDevelopment())
+var weatherbitconfig = builder.Configuration.GetSection(WeatherbitOptions.Weatherbit);
+
+if (!builder.Environment.IsDevelopment())
 {
-    builder.Configuration.AddUserSecrets<Program>();
-}
-else
-{
-    builder.Configuration["XRapidAPIKey"] = Environment.GetEnvironmentVariable("XRapidAPIKey");
+    builder.Services.SetXRapidKeyEnvironmentVariable(weatherbitconfig);
 }
 
 builder.AddLogging();
 
 builder.Services.AddOpenApi();
 
-builder.Services.AddDomain(builder.Configuration);
+builder.Services.AddDomain(weatherbitconfig);
 builder.Services
     .AddAddFavorites()
     .AddGetFavorites()

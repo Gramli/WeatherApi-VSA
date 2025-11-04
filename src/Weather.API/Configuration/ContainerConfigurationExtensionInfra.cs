@@ -12,11 +12,11 @@ namespace Weather.API.Configuration
 {
     public static class ContainerConfigurationExtension
     {
-        public static IServiceCollection AddDomain(this IServiceCollection serviceCollection, IConfiguration configuration)
+        public static IServiceCollection AddDomain(this IServiceCollection serviceCollection, IConfigurationSection weatherbitConfiguration)
         {
             return serviceCollection
                 .AddDatabase()
-                .AddExternalHttpServices(configuration)
+                .AddExternalHttpServices(weatherbitConfiguration)
                 .AddValidation()
                 .AddLogging()
                 .AddServices();
@@ -28,11 +28,11 @@ namespace Weather.API.Configuration
                 .AddDbContext<WeatherContext>(opt => opt.UseInMemoryDatabase("Weather"));
         }
 
-        private static IServiceCollection AddExternalHttpServices(this IServiceCollection serviceCollection, IConfiguration configuration)
+        private static IServiceCollection AddExternalHttpServices(this IServiceCollection serviceCollection, IConfigurationSection weatherbitConfiguration)
         {
             return serviceCollection
                 .AddHttpClient()
-                .AddWeatherbit(configuration);
+                .AddWeatherbit(weatherbitConfiguration);
         }
 
         private static IServiceCollection AddValidation(this IServiceCollection serviceCollection)
@@ -45,6 +45,20 @@ namespace Weather.API.Configuration
         {
             return serviceCollection
                 .AddScoped<IWeatherService, WeatherService>();
+        }
+
+        public static IServiceCollection SetXRapidKeyEnvironmentVariable(this IServiceCollection serviceCollection, IConfigurationSection weatherbitConfiguration)
+        {
+            var apiKey = Environment.GetEnvironmentVariable("XRapidAPIKey");
+
+            if (string.IsNullOrEmpty(apiKey))
+            {
+                throw new ArgumentException("XRapidAPIKey is not configured. Set it via user-secrets (dev) or environment variable (prod).");
+            }
+
+            weatherbitConfiguration["XRapidAPIKey"] = apiKey;
+
+            return serviceCollection;
         }
     }
 }

@@ -10,9 +10,9 @@ namespace Wheaterbit.Client.Configuration
 {
     public static class ContainerConfigurationExtension
     {
-        public static IServiceCollection AddWeatherbit(this IServiceCollection serviceCollection, IConfiguration configuration)
+        public static IServiceCollection AddWeatherbit(this IServiceCollection serviceCollection, IConfigurationSection weatherbitConfiguration)
         {
-            serviceCollection.Configure<WeatherbitOptions>(configuration.GetSection(WeatherbitOptions.Weatherbit));
+            serviceCollection.Configure<WeatherbitOptions>(weatherbitConfiguration);
 
             return serviceCollection.AddSingleton<IWeatherbitHttpClient, WeatherbitHttpClient>()
                 .AddSingleton(typeof(IValidator<WeatherbitOptions>), Validator.Factory.Create(new WeatherbitOptionsSpecificationHolder()))

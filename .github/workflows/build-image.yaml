@@ -34,3 +34,14 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/weatherapi:latest
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: gramli-weather-api-docker
+          images: docker.io/${{ secrets.DOCKERHUB_USERNAME }}/weatherapi:latest

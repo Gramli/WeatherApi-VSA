@@ -11,6 +11,15 @@ using Weather.API.Features.Weather.GetForecast;
 
 var builder = WebApplication.CreateBuilder(args);
 
+if (builder.Environment.IsDevelopment())
+{
+    builder.Configuration.AddUserSecrets<Program>();
+}
+else
+{
+    builder.Configuration["XRapidAPIKey"] = Environment.GetEnvironmentVariable("XRapidAPIKey");
+}
+
 builder.AddLogging();
 
 builder.Services.AddOpenApi();

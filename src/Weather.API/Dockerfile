@@ -7,7 +7,9 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
+COPY ["Directory.Packages.props", "./"]
 COPY ["Weather.API/Weather.API.csproj", "Weather.API/"]
+COPY ["Wheaterbit.Client/Wheaterbit.Client.csproj", "Wheaterbit.Client/"]
 RUN dotnet restore "Weather.API/Weather.API.csproj"
 COPY . .
 WORKDIR "/src/Weather.API"

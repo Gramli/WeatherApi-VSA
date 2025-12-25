@@ -1,0 +1,16 @@
+<Solution>
+  <Folder Name="/ExternalClients/">
+    <Project Path="Wheaterbit.Client/Wheaterbit.Client.csproj" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Packages.props" />
+  </Folder>
+  <Folder Name="/Tests/" />
+  <Folder Name="/Tests/HttpDebug/">
+    <File Path="Tests/HttpDebug/debug-tests.http" />
+  </Folder>
+  <Folder Name="/Tests/UnitTests/">
+    <Project Path="Tests/Weather.API.UnitTests/Weather.API.UnitTests.csproj" />
+  </Folder>
+  <Project Path="Weather.API/Weather.API.csproj" />
+</Solution>

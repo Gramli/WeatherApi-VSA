@@ -1,0 +1,29 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+	  <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.1" />
+	  <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
+	  <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.1" />
+	  <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.1" />
+	  <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.1" />
+	  <PackageVersion Include="Ardalis.GuardClauses" Version="5.0.0" />
+	  <PackageVersion Include="FluentResults" Version="4.0.0" />
+	  <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.1" />
+	  <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="10.0.1" />
+	  <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.1" />
+	  <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
+	  <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
+	  <PackageVersion Include="Scalar.AspNetCore" Version="2.11.10" />
+	  <PackageVersion Include="SmallApiToolkit" Version="10.0.0" />
+	  <PackageVersion Include="SmallApiToolkit.Core" Version="10.0.0" />
+	  <PackageVersion Include="Validot" Version="2.6.0" />
+	  <PackageVersion Include="coverlet.collector" Version="6.0.4"/>
+	  <PackageVersion Include="EntityFramework" Version="6.5.1" />
+	  <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+	  <PackageVersion Include="Moq" Version="4.20.72" />
+	  <PackageVersion Include="xunit" Version="2.9.3" />
+	  <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.5"/>
+  </ItemGroup>
+</Project>

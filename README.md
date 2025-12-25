@@ -12,14 +12,15 @@ The example API allows users to retrieve actual/forecast weather data by locatio
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Get Started](#get-started)
-    - [Try it using .http file (VS2022)](#try-it-using-http-file-vs2022)
+    - [Try it using Scalar](#try-it-using-scalar)
+    - [Try it using .http file](#try-it-using-http-file)
   - [Motivation](#motivation)
   - [Architecture](#architecture)
     - [Comparsion to Clean Architecture](#comparsion-to-clean-architecture)
   - [Technologies](#technologies)
 
 ## Prerequisites
-* **.NET SDK 9.0.x**
+* **.NET SDK 10.0.x**
 
 ## Installation
 
@@ -54,8 +55,8 @@ To install the project using Git Bash:
 ### Try it using Scalar
 After Weather.API is started, the browser is launched by default at the `scalar/v1` URL, so you can test it using [Scalar UI](https://scalar.com).
 
-### Try it using .http file (VS2022)
- * Go to Tests/Debug folder and open **debug-tests.http** file (in VS2022)
+### Try it using .http file
+ * Go to Tests/Debug folder and open **debug-tests.http** file
  * Send request
 
 ## Motivation

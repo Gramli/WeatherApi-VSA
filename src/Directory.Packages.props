@@ -3,19 +3,19 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
-	  <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.2" />
-	  <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
-	  <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.2" />
-	  <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.2" />
-	  <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.2" />
+	  <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.3" />
+	  <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
+	  <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.3" />
+	  <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.3" />
+	  <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.3" />
 	  <PackageVersion Include="Ardalis.GuardClauses" Version="5.0.0" />
 	  <PackageVersion Include="FluentResults" Version="4.0.0" />
-	  <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2" />
-	  <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="10.0.2" />
-	  <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.2" />
+	  <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
+	  <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="10.0.3" />
+	  <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.3" />
 	  <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
 	  <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
-	  <PackageVersion Include="Scalar.AspNetCore" Version="2.12.36" />
+	  <PackageVersion Include="Scalar.AspNetCore" Version="2.12.41" />
 	  <PackageVersion Include="SmallApiToolkit" Version="10.0.0" />
 	  <PackageVersion Include="SmallApiToolkit.Core" Version="10.0.0" />
 	  <PackageVersion Include="Validot" Version="2.6.0" />

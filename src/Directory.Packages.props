@@ -15,7 +15,7 @@
 	  <PackageVersion Include="Microsoft.EntityFrameworkCore.InMemory" Version="10.0.3" />
 	  <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
 	  <PackageVersion Include="Newtonsoft.Json" Version="13.0.4" />
-	  <PackageVersion Include="Scalar.AspNetCore" Version="2.12.41" />
+	  <PackageVersion Include="Scalar.AspNetCore" Version="2.12.46" />
 	  <PackageVersion Include="SmallApiToolkit" Version="10.0.0" />
 	  <PackageVersion Include="SmallApiToolkit.Core" Version="10.0.0" />
 	  <PackageVersion Include="Validot" Version="2.6.0" />

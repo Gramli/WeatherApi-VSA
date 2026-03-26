@@ -1,6 +1,7 @@
 ﻿using FluentResults;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Testing;
 using Moq;
 using SmallApiToolkit.Core.RequestHandlers;
 using SmallApiToolkit.Core.Response;
@@ -19,7 +20,7 @@ namespace Weather.API.UnitTests.Features.GetFavorites
     public class GetFavoritesHandlerTests
     {
         private readonly Mock<IWeatherService> _weatherServiceMock;
-        private readonly Mock<ILogger<GetFavoritesHandler>> _loggerMock;
+        private readonly FakeLogger<GetFavoritesHandler> _fakeLogger;
         private readonly Mock<IValidator<LocationDto>> _locationValidatorMock;
         private readonly Mock<IValidator<CurrentWeatherDto>> _currentWeatherValidatorMock;
         private readonly Mock<TestWeatherContext> _weatherContextMock;
@@ -29,7 +30,7 @@ namespace Weather.API.UnitTests.Features.GetFavorites
         public GetFavoritesHandlerTests()
         {
             _weatherServiceMock = new();
-            _loggerMock = new();
+            _fakeLogger = new FakeLogger<GetFavoritesHandler>();
             _locationValidatorMock = new();
             _currentWeatherValidatorMock = new();
             _weatherContextMock = new();
@@ -39,7 +40,7 @@ namespace Weather.API.UnitTests.Features.GetFavorites
                 _weatherServiceMock.Object,
                 _locationValidatorMock.Object,
                 _currentWeatherValidatorMock.Object,
-                _loggerMock.Object,
+                _fakeLogger,
                 _weatherContextMock.Object);
         }
 
@@ -99,7 +100,9 @@ namespace Weather.API.UnitTests.Features.GetFavorites
             Assert.Equal(HttpStatusCode.InternalServerError, result.StatusCode);
             Assert.Single(result.Errors);
             _weatherServiceMock.Verify(x => x.GetCurrentWeather(It.IsAny<LocationDto>(), It.IsAny<CancellationToken>()), Times.Once);
-            _loggerMock.VerifyLog(LogLevel.Warning, LogEvents.FavoriteWeathersGeneral, failMessage, Times.Once());
+            Assert.Equal(LogLevel.Warning, _fakeLogger.LatestRecord.Level);
+            Assert.Equal(LogEvents.FavoriteWeathersGeneral, _fakeLogger.LatestRecord.Id);
+            Assert.Equal(failMessage, _fakeLogger.LatestRecord.Message, StringComparer.InvariantCultureIgnoreCase);
             _locationValidatorMock.Verify(x => x.IsValid(It.IsAny<LocationDto>()), Times.Once);
         }
 
@@ -132,7 +135,9 @@ namespace Weather.API.UnitTests.Features.GetFavorites
             Assert.NotNull(result.Data);
             Assert.Single(result.Data.FavoriteWeathers);
             _weatherServiceMock.Verify(x => x.GetCurrentWeather(It.IsAny<LocationDto>(), It.IsAny<CancellationToken>()), Times.Exactly(2));
-            _loggerMock.VerifyLog(LogLevel.Warning, LogEvents.FavoriteWeathersGeneral, failMessage, Times.Once());
+            Assert.Equal(LogLevel.Warning, _fakeLogger.LatestRecord.Level);
+            Assert.Equal(LogEvents.FavoriteWeathersGeneral, _fakeLogger.LatestRecord.Id);
+            Assert.Equal(failMessage, _fakeLogger.LatestRecord.Message, StringComparer.InvariantCultureIgnoreCase);
             _locationValidatorMock.Verify(x => x.IsValid(It.IsAny<LocationDto>()), Times.Exactly(2));
             _currentWeatherValidatorMock.Verify(x => x.IsValid(It.Is<CurrentWeatherDto>(y => y.Equals(currentWeather))), Times.Once);
         }

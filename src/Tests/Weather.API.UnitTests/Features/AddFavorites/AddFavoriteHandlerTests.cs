@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Testing;
 using Moq;
 using SmallApiToolkit.Core.RequestHandlers;
 using System.Net;
@@ -9,7 +10,6 @@ using Weather.API.Domain.Dtos;
 using Weather.API.Domain.Logging;
 using Weather.API.Features.Favorites.AddFavorites;
 using Weather.API.UnitTests.Domain.Database;
-using Weather.API.UnitTests.TestExtensions;
 
 namespace Weather.API.UnitTests.Features.AddFavorites
 {
@@ -17,7 +17,7 @@ namespace Weather.API.UnitTests.Features.AddFavorites
     {
         private readonly Mock<TestWeatherContext> _weatherContextMock;
         private readonly Mock<IValidator<AddFavoriteCommand>> _addFavoriteCommandValidatorMock;
-        private readonly Mock<ILogger<AddFavoriteHandler>> _loggerMock;
+        private readonly FakeLogger<AddFavoriteHandler> _fakeLogger;
         private readonly Mock<DbSet<FavoriteLocationEntity>> _favoriteLocationEntityDbSetMock;
 
         private readonly IHttpRequestHandler<int, AddFavoriteCommand> _uut;
@@ -28,9 +28,9 @@ namespace Weather.API.UnitTests.Features.AddFavorites
             _weatherContextMock.Setup(x => x.FavoriteLocations).Returns(_favoriteLocationEntityDbSetMock.Object);
 
             _addFavoriteCommandValidatorMock = new();
-            _loggerMock = new();
+            _fakeLogger = new FakeLogger<AddFavoriteHandler>();
 
-            _uut = new AddFavoriteHandler(_addFavoriteCommandValidatorMock.Object, _loggerMock.Object, _weatherContextMock.Object);
+            _uut = new AddFavoriteHandler(_addFavoriteCommandValidatorMock.Object, _fakeLogger, _weatherContextMock.Object);
         }
 
 
@@ -68,7 +68,8 @@ namespace Weather.API.UnitTests.Features.AddFavorites
             Assert.Equal(HttpStatusCode.InternalServerError, result.StatusCode);
             Assert.Single(result.Errors);
             _addFavoriteCommandValidatorMock.Verify(x => x.IsValid(It.Is<AddFavoriteCommand>(y => y.Equals(addFavoriteCommand))), Times.Once);
-            _loggerMock.VerifyLog(LogLevel.Error, LogEvents.FavoriteWeathersStoreToDatabase, Times.Once());
+            Assert.Equal(LogLevel.Error, _fakeLogger.LatestRecord.Level);
+            Assert.Equal(LogEvents.FavoriteWeathersStoreToDatabase, _fakeLogger.LatestRecord.Id);
         }
 
         [Fact]

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Testing;
 using Moq;
 using SmallApiToolkit.Core.RequestHandlers;
 using System.Net;
@@ -22,11 +22,11 @@ namespace Weather.API.UnitTests.Features.DeleteFavorites
         public DeleteFavoriteHandlerTests()
         {
             _deleteFavoriteCommandValidatorMock = new();
-            var loggerMock = new Mock<ILogger<DeleteFavoriteHandler>>();
+            var fakeLogger = new FakeLogger<DeleteFavoriteHandler>();
             _weatherContextMock = new();
             _favoriteLocationEntityDbSetMock = new();
 
-            _uut = new DeleteFavoriteHandler(_deleteFavoriteCommandValidatorMock.Object, loggerMock.Object, _weatherContextMock.Object);
+            _uut = new DeleteFavoriteHandler(_deleteFavoriteCommandValidatorMock.Object, fakeLogger, _weatherContextMock.Object);
         }
 
         [Fact]

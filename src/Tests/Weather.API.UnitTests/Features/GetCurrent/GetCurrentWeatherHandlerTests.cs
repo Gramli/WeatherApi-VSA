@@ -1,5 +1,6 @@
 ﻿using FluentResults;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Testing;
 using Moq;
 using SmallApiToolkit.Core.RequestHandlers;
 using System.Net;
@@ -10,7 +11,6 @@ using Weather.API.Domain.Dtos;
 using Weather.API.Domain.Logging;
 using Weather.API.Domain.Resources;
 using Weather.API.Features.Weather.GetCurrent;
-using Weather.API.UnitTests.TestExtensions;
 
 namespace Weather.API.UnitTests.Features.GetCurrent
 {
@@ -19,7 +19,7 @@ namespace Weather.API.UnitTests.Features.GetCurrent
         private readonly Mock<IValidator<GetCurrentWeatherQuery>> _getCurrentWeatherQueryValidatorMock;
         private readonly Mock<IValidator<CurrentWeatherDto>> _currentWeatherValidatorMock;
         private readonly Mock<IWeatherService> _weatherServiceMock;
-        private readonly Mock<ILogger<GetCurrentWeatherHandler>> _loggerMock;
+        private readonly FakeLogger<GetCurrentWeatherHandler> _fakeLogger;
 
         private readonly IHttpRequestHandler<CurrentWeatherDto, GetCurrentWeatherQuery> _uut;
         public GetCurrentWeatherHandlerTests()
@@ -27,9 +27,9 @@ namespace Weather.API.UnitTests.Features.GetCurrent
             _getCurrentWeatherQueryValidatorMock = new();
             _currentWeatherValidatorMock = new();
             _weatherServiceMock = new();
-            _loggerMock = new();
+            _fakeLogger = new FakeLogger<GetCurrentWeatherHandler>();
 
-            _uut = new GetCurrentWeatherHandler(_getCurrentWeatherQueryValidatorMock.Object, _currentWeatherValidatorMock.Object, _weatherServiceMock.Object, _loggerMock.Object);
+            _uut = new GetCurrentWeatherHandler(_getCurrentWeatherQueryValidatorMock.Object, _currentWeatherValidatorMock.Object, _weatherServiceMock.Object, _fakeLogger);
         }
 
         [Fact]
@@ -69,7 +69,9 @@ namespace Weather.API.UnitTests.Features.GetCurrent
             Assert.Null(result.Data);
             _getCurrentWeatherQueryValidatorMock.Verify(x => x.IsValid(It.Is<GetCurrentWeatherQuery>(y => y.Equals(getCurrentWeatherQuery))), Times.Once);
             _weatherServiceMock.Verify(x => x.GetCurrentWeather(It.Is<LocationDto>(y => y.Equals(getCurrentWeatherQuery.Location)), It.IsAny<CancellationToken>()), Times.Once);
-            _loggerMock.VerifyLog(LogLevel.Error, LogEvents.CurrentWeathersGet, errorMessage, Times.Once());
+            Assert.Equal(LogLevel.Error, _fakeLogger.LatestRecord.Level);
+            Assert.Equal(LogEvents.CurrentWeathersGet, _fakeLogger.LatestRecord.Id);
+            Assert.Equal(errorMessage, _fakeLogger.LatestRecord.Message, StringComparer.InvariantCultureIgnoreCase);
         }
 
         [Fact]
@@ -96,7 +98,8 @@ namespace Weather.API.UnitTests.Features.GetCurrent
             _weatherServiceMock.Verify(x => x.GetCurrentWeather(It.Is<LocationDto>(y => y.Equals(getCurrentWeatherQuery.Location)), It.IsAny<CancellationToken>()), Times.Once);
             _currentWeatherValidatorMock.Verify(x => x.Validate(It.Is<CurrentWeatherDto>(y => y.Equals(currentWeather)), It.Is<bool>(y => !y)), Times.Once);
             validationResutlMock.VerifyGet(x => x.AnyErrors, Times.Once);
-            _loggerMock.VerifyLog(LogLevel.Error, LogEvents.CurrentWeathersValidation, Times.Once());
+            Assert.Equal(LogLevel.Error, _fakeLogger.LatestRecord.Level);
+            Assert.Equal(LogEvents.CurrentWeathersValidation, _fakeLogger.LatestRecord.Id);
         }
 
         [Fact]

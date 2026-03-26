@@ -16,6 +16,7 @@
     </PackageReference>
     <PackageReference Include="EntityFramework"/>
     <PackageReference Include="Microsoft.NET.Test.Sdk"/>
+    <PackageReference Include="Microsoft.Extensions.Diagnostics.Testing" />
     <PackageReference Include="Moq" />
     <PackageReference Include="Validot"/>
     <PackageReference Include="xunit" />
